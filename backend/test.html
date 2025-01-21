@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test UI</title>
+    <style>
+        .container { 
+            margin: 20px auto; 
+            padding: 20px;
+            max-width: 800px;
+            font-family: Arial, sans-serif;
+        }
+        .form-group { 
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group input {
+            margin: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response { 
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .error {
+            color: #dc3545;
+            margin: 5px 0;
+        }
+        .success {
+            color: #28a745;
+            margin: 5px 0;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            margin-bottom: 20px;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            color: black;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+        }
+        .tabcontent.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>API Test Interface</h2>
+        <div id="connectionStatus" class="status"></div>
+
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'Auth')">Authentication</button>
+            <button class="tablinks" onclick="openTab(event, 'Users')">Users</button>
+            <button class="tablinks" onclick="openTab(event, 'Challenges')">Challenges</button>
+            <button class="tablinks" onclick="openTab(event, 'Admin')">Admin</button>
+        </div>
+
+        <!-- Auth Tab -->
+        <div id="Auth" class="tabcontent active">
+            <div class="form-group">
+                <h3>Register User</h3>
+                <input type="text" id="registerName" placeholder="Name">
+                <input type="text" id="registerEmail" placeholder="Email">
+                <input type="password" id="registerPassword" placeholder="Password">
+                <input type="text" id="registerNumber" placeholder="Phone Number">
+                <div id="registerError" class="error"></div>
+                <button onclick="register()">Register</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Login</h3>
+                <input type="text" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <div id="loginError" class="error"></div>
+                <div id="loginSuccess" class="success"></div>
+                <button onclick="login()">Login</button>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="Users" class="tabcontent">
+            <div class="form-group">
+                <h3>User Profile</h3>
+                <button onclick="getProfile()">Get Profile</button>
+                <div id="profileError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <h3>Update Profile</h3>
+                <input type="text" id="updateName" placeholder="Name">
+                <input type="text" id="updateEmail" placeholder="Email">
+                <input type="text" id="updateNumber" placeholder="Phone Number">
+                <div id="updateError" class="error"></div>
+                <button onclick="updateProfile()">Update Profile</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Upload Profile Picture</h3>
+                <input type="file" id="profilePicture" accept="image/*">
+                <div id="uploadError" class="error"></div>
+                <button onclick="uploadProfilePicture()">Upload</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Search Users</h3>
+                <input type="text" id="userSearchInput" placeholder="Search for users...">
+                <button onclick="searchUsers()">Search Users</button>
+                <pre id="userResults"></pre>
+            </div>
+        </div>
+
+        <!-- Challenges Tab -->
+        <div id="Challenges" class="tabcontent">
+            <div class="form-group">
+                <h3>Create Challenge</h3>
+                <input type="text" id="challengeTitle" placeholder="Title">
+                <input type="datetime-local" id="challengeDeadline">
+                <input type="email" id="challengeEmail" placeholder="Contact Email">
+                <textarea id="challengeDescription" placeholder="Project Description"></textarea>
+                <input type="text" id="challengeBrief" placeholder="Brief">
+                <input type="number" id="challengePrize" placeholder="Prize Amount">
+                <div id="createChallengeError" class="error"></div>
+                <button onclick="createChallenge()">Create Challenge</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Get All Challenges</h3>
+                <div id="challengesError" class="error"></div>
+                <button onclick="getChallenges()">Get Challenges</button>
+            </div>
+
+            <div class="form-group">
+                <h3>Challenge Actions</h3>
+                <input type="text" id="challengeId" placeholder="Challenge ID">
+                <button onclick="participateInChallenge()">Participate</button>
+                <button onclick="updateChallengeStatus()">Update Status</button>
+                <select id="challengeStatus">
+                    <option value="open">Open</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <h3>Search Challenges</h3>
+                <input type="text" id="challengeSearchInput" placeholder="Search for challenges...">
+                <button onclick="searchChallenges()">Search Challenges</button>
+                <pre id="challengeResults"></pre>
+            </div>
+        </div>
+
+        <!-- Admin Tab -->
+        <div id="Admin" class="tabcontent">
+            <div class="form-group">
+                <h3>Admin Actions</h3>
+                <button onclick="requestAdminRole()">Request Admin Role</button>
+                <div id="adminRequestError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <h3>Super Admin Actions</h3>
+                <button onclick="getPendingAdminRequests()">Get Pending Requests</button>
+                <div id="pendingRequestsContainer"></div>
+            </div>
+        </div>
+
+        <div id="response" class="response">
+            <pre></pre>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let token = localStorage.getItem('token') || '';
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Check API connection on load
+        window.onload = async () => {
+            try {
+                const response = await fetch(`${API_URL}/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                document.getElementById('connectionStatus').innerHTML = 
+                    `<div class="success">API Status: ${data.status}</div>`;
+            } catch (error) {
+                document.getElementById('connectionStatus').innerHTML = 
+                    `<div class="error">API Connection Error: ${error.message}</div>`;
+            }
+        };
+
+        async function register() {
+            clearErrors();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const number = document.getElementById('registerNumber').value;
+            
+            if (!name || !email || !password || !number) {
+                showError('registerError', 'All fields are required');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name, 
+                        email, 
+                        password,
+                        number,
+                        role: 'user'
+                    })
+                });
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.message || 'Registration failed');
+                
+                showResponse(data);
+                showSuccess('registerError', 'Registration successful! Please login.');
+            } catch (error) {
+                showError('registerError', error.message);
+            }
+        }
+
+        async function login() {
+            clearErrors();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                showError('loginError', 'Email and password are required');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/users/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.message || 'Login failed');
+                
+                token = data.token;
+                localStorage.setItem('token', token);
+                showResponse(data);
+                showSuccess('loginSuccess', 'Login successful!');
+            } catch (error) {
+                showError('loginError', error.message);
+            }
+        }
+
+        async function getChallenges() {
+            clearErrors();
+            try {
+                const headers = { 
+                    'Content-Type': 'application/json'
+                };
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+                
+                const response = await fetch(`${API_URL}/challenges`, {
+                    headers
+                });
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.message || 'Failed to fetch challenges');
+                
+                showResponse(data);
+            } catch (error) {
+                showError('challengesError', error.message);
+            }
+        }
+
+        async function getProfile() {
+            try {
+                const response = await fetch(`${API_URL}/users/profile`, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('profileError', error.message);
+            }
+        }
+
+        async function updateProfile() {
+            const name = document.getElementById('updateName').value;
+            const email = document.getElementById('updateEmail').value;
+            const number = document.getElementById('updateNumber').value;
+
+            try {
+                const response = await fetch(`${API_URL}/users/profile`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, number })
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('updateError', error.message);
+            }
+        }
+
+        async function uploadProfilePicture() {
+            const file = document.getElementById('profilePicture').files[0];
+            if (!file) {
+                showError('uploadError', 'No file selected');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('profilePicture', file);
+
+            try {
+                const response = await fetch(`${API_URL}/users/profile-picture`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('uploadError', error.message);
+            }
+        }
+
+        async function createChallenge() {
+            const challengeData = {
+                Title: document.getElementById('challengeTitle').value,
+                Deadline: document.getElementById('challengeDeadline').value,
+                contact_email: document.getElementById('challengeEmail').value,
+                Project_Discription: document.getElementById('challengeDescription').value,
+                Brief: document.getElementById('challengeBrief').value,
+                Money_Prize: Number(document.getElementById('challengePrize').value)
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/challenges`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(challengeData)
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('createChallengeError', error.message);
+            }
+        }
+
+        async function participateInChallenge() {
+            const challengeId = document.getElementById('challengeId').value;
+            try {
+                const response = await fetch(`${API_URL}/challenges/${challengeId}/participate`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('challengesError', error.message);
+            }
+        }
+
+        async function updateChallengeStatus() {
+            const challengeId = document.getElementById('challengeId').value;
+            const status = document.getElementById('challengeStatus').value;
+            try {
+                const response = await fetch(`${API_URL}/challenges/${challengeId}/status`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('challengesError', error.message);
+            }
+        }
+
+        async function requestAdminRole() {
+            try {
+                const response = await fetch(`${API_URL}/users/request-admin`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showError('adminRequestError', error.message);
+            }
+        }
+
+        async function getPendingAdminRequests() {
+            try {
+                const response = await fetch(`${API_URL}/users/pending-admin-requests`, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                showResponse(data);
+                
+                // Display pending requests with approve/reject buttons
+                const container = document.getElementById('pendingRequestsContainer');
+                container.innerHTML = data.map(request => `
+                    <div class="pending-request">
+                        <p>User: ${request.name} (${request.email})</p>
+                        <button onclick="processAdminRequest('${request._id}', 'approved')">Approve</button>
+                        <button onclick="processAdminRequest('${request._id}', 'rejected')">Reject</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showError('adminRequestError', error.message);
+            }
+        }
+
+        async function processAdminRequest(userId, status) {
+            try {
+                const response = await fetch(`${API_URL}/users/process-admin-request/${userId}`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                const data = await response.json();
+                showResponse(data);
+                getPendingAdminRequests(); // Refresh the list
+            } catch (error) {
+                showError('adminRequestError', error.message);
+            }
+        }
+
+        async function searchUsers() {
+            const query = document.getElementById('userSearchInput').value;
+            const response = await fetch(`${API_URL}/users/search?query=${query}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const users = await response.json();
+            document.getElementById('userResults').innerHTML = JSON.stringify(users, null, 2);
+        }
+
+        async function searchChallenges() {
+            const query = document.getElementById('challengeSearchInput').value;
+            const response = await fetch(`${API_URL}/challenges/search?query=${query}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const challenges = await response.json();
+            document.getElementById('challengeResults').innerHTML = JSON.stringify(challenges, null, 2);
+        }
+
+        // Utility functions
+        function showResponse(data) {
+            document.querySelector('#response pre').innerHTML = 
+                JSON.stringify(data, null, 2);
+        }
+
+        function showError(elementId, message) {
+            document.getElementById(elementId).innerHTML = message;
+        }
+
+        function showSuccess(elementId, message) {
+            document.getElementById(elementId).innerHTML = 
+                `<span class="success">${message}</span>`;
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error, .success').forEach(el => {
+                el.innerHTML = '';
+            });
+        }
+    </script>
+</body>
+</html>
