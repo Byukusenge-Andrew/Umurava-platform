@@ -1,5 +1,5 @@
 import { Model, Document } from 'mongoose';
-import { NotFoundError } from '@/utils/errorHandler'
+import { NotFoundError } from '../utils/errorHandler'
 
 export default abstract class BaseService<T extends Document> {
   constructor(protected model: Model<T>) {}

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Model } from 'mongoose';
 import BaseController from './BaseController';
 import Challenge from '../models/Challenge';
+import ChallengeService from '../services/ChallengeService';
 import { IChallenge, ChallengeStatus } from '../types';
 import logger from '../utils/logger';
 
@@ -21,14 +22,16 @@ interface IChallengeModel extends Model<IChallenge> {
 }
 
 export default class ChallengeController extends BaseController<IChallenge> {
-    challengeService: any;
+    private challengeService: ChallengeService;
+
     constructor() {
-        super(Challenge as unknown as Model<IChallenge>);
+        super(Challenge as Model<IChallenge>);
+        this.challengeService = new ChallengeService();
     }
 
     getChallengeStats = async (req: Request, res: Response): Promise<void> => {
         try {
-            const stats = await (Challenge as unknown as IChallengeModel).getChallengeStats();
+            const stats = await this.challengeService.getChallengeStats();
             res.status(200).json(stats);
         } catch (error) {
             logger.error('Error in getChallengeStats:', error);
@@ -39,7 +42,7 @@ export default class ChallengeController extends BaseController<IChallenge> {
     getUserChallenges = async (req: Request, res: Response): Promise<void> => {
         try {
             const userId = req.params.userId;
-            const stats = await (Challenge as unknown as IChallengeModel).getUserChallengeStats(Number(userId));
+            const stats = await this.challengeService.getUserChallengeStats(Number(userId));
             res.status(200).json(stats);
         } catch (error) {
             logger.error('Error in getUserChallenges:', error);
@@ -51,51 +54,40 @@ export default class ChallengeController extends BaseController<IChallenge> {
         try {
             const { id } = req.params;
             const { status } = req.body;
-
-            if (!Object.values(ChallengeStatus).includes(status)) {
-                res.status(400).json({ message: 'Invalid status' });
-                return;
-            }
-
-            const challenge = await Challenge.findById(id);
-            if (!challenge) {
-                res.status(404).json({ message: 'Challenge not found' });
-                return;
-            }
-
-            await challenge.updateStatus(status);
+            const challenge = await this.challengeService.updateChallengeStatus(id, status);
             res.status(200).json(challenge);
         } catch (error) {
             logger.error('Error in updateChallengeStatus:', error);
+            if (error instanceof Error) {
+                res.status(400).json({ message: error.message });
+                return;
+            }
             res.status(500).json({ message: 'Internal server error' });
         }
     };
 
     addParticipant = async (req: Request, res: Response): Promise<void> => {
         try {
-            const challenge = await Challenge.findById(req.params.id);
-            if (!challenge) {
-                res.status(404).json({ message: 'Challenge not found' });
-                return;
-            }
-
-            if (!challenge.isActive()) {
-                res.status(400).json({ message: 'Challenge is not active' });
-                return;
-            }
-
-            await challenge.addParticipant();
+            const challenge = await this.challengeService.addParticipant(req.params.id);
             res.status(200).json(challenge);
         } catch (error) {
             logger.error('Error in addParticipant:', error);
+            if (error instanceof Error) {
+                res.status(400).json({ message: error.message });
+                return;
+            }
             res.status(500).json({ message: 'Internal server error' });
         }
     };
 
     searchChallenges = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { query } = req.query; // Get search query from request
-            const challenges = await this.challengeService.searchChallenges(query as string);
+            const { query } = req.query;
+            if (typeof query !== 'string') {
+                res.status(400).json({ message: 'Invalid query parameter' });
+                return;
+            }
+            const challenges = await this.challengeService.search(query);
             res.status(200).json(challenges);
         } catch (error) {
             logger.error('Error in searchChallenges:', error);

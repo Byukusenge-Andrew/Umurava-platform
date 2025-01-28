@@ -165,14 +165,9 @@ UserSchema.pre<IUserDocument>('save', async function (next) {
     }
 });
 
-UserSchema.methods.comparedPassword = async function (enteredPassword: string): Promise<boolean> {
-    try {
-        return await bcrypt.compare(enteredPassword, this.password);
-    } catch (error) {
-        logger.error('Error comparing passwords:', error);
-        throw error;
-    }
-}
+UserSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
 
 // Add validation
 UserSchema.path('email').validate(async function(email: string) {

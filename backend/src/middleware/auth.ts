@@ -9,6 +9,7 @@ import { IUser } from '../types';
 import User from '../models/User';
 import logger from '../utils/logger';
 import { AuthenticationError, AuthorizationError } from '../utils/errorHandler';
+import config from '../config/config';
 
 declare global {
     namespace Express {
@@ -38,17 +39,20 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
             throw new AuthenticationError('Not authorized to access this route');
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
-        const user = await User.findById(decoded.id);
+        try {
+            const decoded = jwt.verify(token, config.jwtSecret) as { id: string };
+            const user = await User.findById(decoded.id);
 
-        if (!user) {
-            throw new AuthenticationError('User not found');
+            if (!user) {
+                throw new AuthenticationError('User not found');
+            }
+
+            req.user = user;
+            next();
+        } catch (error) {
+            throw new AuthenticationError('Invalid token');
         }
-
-        req.user = user;
-        next();
     } catch (error) {
-        logger.error('Auth error:', error);
         next(error);
     }
 };
@@ -62,10 +66,20 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
  */
 export const authorize = (...roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        if (!req.user || !roles.includes(req.user.role)) {
-            throw new AuthorizationError(`Role ${req.user?.role} is not authorized to access this route`);
+        try {
+            if (!req.user) {
+                throw new AuthenticationError('User not found');
+            }
+
+            if (!roles.includes(req.user.role)) {
+                throw new AuthorizationError(
+                    `User role ${req.user.role} is not authorized to access this route`
+                );
+            }
+            next();
+        } catch (error) {
+            next(error);
         }
-        next();
     };
 };
 
@@ -78,8 +92,16 @@ export const authorize = (...roles: string[]) => {
  * @throws {AuthorizationError} If user is not super admin
  */
 export const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.user || !req.user.isSuper()) {
-        throw new AuthorizationError('Only super admins can access this route');
+    try {
+        if (!req.user) {
+            throw new AuthenticationError('User not found');
+        }
+
+        if (!req.user.isSuper()) {
+            throw new AuthorizationError('Only super admins can access this route');
+        }
+        next();
+    } catch (error) {
+        next(error);
     }
-    next();
 };

@@ -24,7 +24,7 @@ declare module 'express' {
 }
 
 interface IUserModel extends Model<IUser> {
-    comparedPassword(password: string): Promise<boolean>;
+    comparePassword(password: string): Promise<boolean>;
 }
 
 export default class UserController extends BaseController<IUser> {
@@ -46,9 +46,20 @@ export default class UserController extends BaseController<IUser> {
     login = async (req: Request, res: Response): Promise<void> => {
         try {
             const { email, password } = req.body;
-            const user = await User.findOne({ email }).select('+password') as IUser;
+            console.log('Login attempt:', { email }); // Add logging
+
+            const user = await User.findOne({ email }).select('+password');
             
-            if (!user || !(await user.comparedPassword(password))) {
+            if (!user) {
+                console.log('User not found:', { email }); // Add logging
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+
+            const isMatch = await user.comparePassword(password);
+            console.log('Password match:', isMatch); // Add logging
+
+            if (!isMatch) {
                 res.status(401).json({ message: 'Invalid credentials' });
                 return;
             }
@@ -56,8 +67,8 @@ export default class UserController extends BaseController<IUser> {
             // Generate JWT token
             const token = jwt.sign(
                 { id: user._id },
-                config.jwtSecret,
-                { expiresIn: config.jwtExpiresIn }
+                config.jwtSecret as jwt.Secret,
+                { expiresIn: '30d' }
             );
 
             res.status(200).json({
@@ -70,7 +81,7 @@ export default class UserController extends BaseController<IUser> {
                 }
             });
         } catch (error) {
-            logger.error('Error in login:', error);
+            console.error('Login error:', error); // Add logging
             res.status(500).json({ message: 'Internal server error' });
         }
     };

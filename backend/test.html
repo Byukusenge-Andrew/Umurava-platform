@@ -3,567 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Test UI</title>
+    <title>API Test</title>
     <style>
-        .container { 
-            margin: 20px auto; 
-            padding: 20px;
-            max-width: 800px;
-            font-family: Arial, sans-serif;
+        body { 
+            padding: 20px; 
+            font-family: Arial; 
+            max-width: 800px; 
+            margin: auto; 
         }
-        .form-group { 
-            margin: 20px 0;
-            padding: 15px;
+        .card {
             border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .form-group input {
-            margin: 5px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .response { 
-            background: #f8f9fa;
             padding: 15px;
-            margin-top: 20px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .response {
+            background: #f5f5f5;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            overflow-x: auto;
         }
         .error {
-            color: #dc3545;
-            margin: 5px 0;
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
         }
-        .success {
-            color: #28a745;
-            margin: 5px 0;
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
         }
-        .status {
-            margin: 10px 0;
-            padding: 10px;
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) { 
+            background: #0056b3; 
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .tab {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-            margin-bottom: 20px;
+        .invalid {
+            border-color: red;
         }
-        .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            color: black;
-        }
-        .tab button:hover {
-            background-color: #ddd;
-        }
-        .tab button.active {
-            background-color: #007bff;
-            color: white;
-        }
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-        }
-        .tabcontent.active {
-            display: block;
+        #imageGallery img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin: 5px;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>API Test Interface</h2>
-        <div id="connectionStatus" class="status"></div>
+    <h1>Umurava API Test</h1>
 
-        <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'Auth')">Authentication</button>
-            <button class="tablinks" onclick="openTab(event, 'Users')">Users</button>
-            <button class="tablinks" onclick="openTab(event, 'Challenges')">Challenges</button>
-            <button class="tablinks" onclick="openTab(event, 'Admin')">Admin</button>
-        </div>
+    <div class="card">
+        <h3>1. Login</h3>
+        <input type="email" id="loginEmail" placeholder="Email" required
+               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"
+               onchange="validateEmail(this)">
+        <div id="loginEmailError" class="error"></div>
+        <input type="password" id="loginPassword" placeholder="Password" required
+               minlength="8" onchange="validatePassword(this)">
+        <div id="loginPasswordError" class="error"></div>
+        <button onclick="login()" id="loginBtn">Login</button>
+        <div id="loginResponse" class="response"></div>
+    </div>
 
-        <!-- Auth Tab -->
-        <div id="Auth" class="tabcontent active">
-            <div class="form-group">
-                <h3>Register User</h3>
-                <input type="text" id="registerName" placeholder="Name">
-                <input type="text" id="registerEmail" placeholder="Email">
-                <input type="password" id="registerPassword" placeholder="Password">
-                <input type="text" id="registerNumber" placeholder="Phone Number">
-                <div id="registerError" class="error"></div>
-                <button onclick="register()">Register</button>
-            </div>
+    <div class="card">
+        <h3>2. Register</h3>
+        <input type="text" id="registerName" placeholder="Full Name" required
+               minlength="2" maxlength="50" onchange="validateField(this, 2, 50)">
+        <div id="registerNameError" class="error"></div>
+        <input type="email" id="registerEmail" placeholder="Email" required
+               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"
+               onchange="validateEmail(this)">
+        <div id="registerEmailError" class="error"></div>
+        <input type="tel" id="registerPhone" placeholder="Phone Number (e.g., 0784123456)" required
+               pattern="[0-9]{9,10}" 
+               onchange="validatePhone(this)">
+        <div id="registerPhoneError" class="error"></div>
+        <input type="password" id="registerPassword" placeholder="Password" required
+               minlength="8" onchange="validatePassword(this)">
+        <div id="registerPasswordError" class="error"></div>
+        <button onclick="register()" id="registerBtn">Register</button>
+        <div id="registerResponse" class="response"></div>
+    </div>
 
-            <div class="form-group">
-                <h3>Login</h3>
-                <input type="text" id="loginEmail" placeholder="Email">
-                <input type="password" id="loginPassword" placeholder="Password">
-                <div id="loginError" class="error"></div>
-                <div id="loginSuccess" class="success"></div>
-                <button onclick="login()">Login</button>
-            </div>
-        </div>
+    <div class="card">
+        <h3>2. Challenge Management</h3>
+        <input type="text" id="title" placeholder="Challenge Title" required
+               minlength="10" maxlength="200" onchange="validateField(this, 10, 200)">
+        <div id="titleError" class="error"></div>
+        <textarea id="brief" placeholder="Brief Description" required
+                  minlength="20" maxlength="500" onchange="validateField(this, 20, 500)"></textarea>
+        <div id="briefError" class="error"></div>
+        <textarea id="description" placeholder="Full Project Description" required
+                  minlength="50" maxlength="5000" onchange="validateField(this, 50, 5000)"></textarea>
+        <div id="descriptionError" class="error"></div>
+        <input type="email" id="contact_email" placeholder="Contact Email" required
+               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+               onchange="validateEmail(this)">
+        <div id="contactEmailError" class="error"></div>
+        <input type="number" id="prize" placeholder="Prize Amount (USD)" required
+               min="100" max="1000000" onchange="validateNumber(this, 100, 1000000)">
+        <div id="prizeError" class="error"></div>
+        <input type="date" id="deadline" required onchange="validateDate(this)">
+        <div id="deadlineError" class="error"></div>
+        <button onclick="createChallenge()" id="createChallengeBtn" disabled>Create Challenge</button>
+        <button onclick="listChallenges()">List Challenges</button>
+        <div id="challengeResponse" class="response"></div>
+    </div>
 
-        <!-- Users Tab -->
-        <div id="Users" class="tabcontent">
-            <div class="form-group">
-                <h3>User Profile</h3>
-                <button onclick="getProfile()">Get Profile</button>
-                <div id="profileError" class="error"></div>
-            </div>
-
-            <div class="form-group">
-                <h3>Update Profile</h3>
-                <input type="text" id="updateName" placeholder="Name">
-                <input type="text" id="updateEmail" placeholder="Email">
-                <input type="text" id="updateNumber" placeholder="Phone Number">
-                <div id="updateError" class="error"></div>
-                <button onclick="updateProfile()">Update Profile</button>
-            </div>
-
-            <div class="form-group">
-                <h3>Upload Profile Picture</h3>
-                <input type="file" id="profilePicture" accept="image/*">
-                <div id="uploadError" class="error"></div>
-                <button onclick="uploadProfilePicture()">Upload</button>
-            </div>
-
-            <div class="form-group">
-                <h3>Search Users</h3>
-                <input type="text" id="userSearchInput" placeholder="Search for users...">
-                <button onclick="searchUsers()">Search Users</button>
-                <pre id="userResults"></pre>
-            </div>
-        </div>
-
-        <!-- Challenges Tab -->
-        <div id="Challenges" class="tabcontent">
-            <div class="form-group">
-                <h3>Create Challenge</h3>
-                <input type="text" id="challengeTitle" placeholder="Title">
-                <input type="datetime-local" id="challengeDeadline">
-                <input type="email" id="challengeEmail" placeholder="Contact Email">
-                <textarea id="challengeDescription" placeholder="Project Description"></textarea>
-                <input type="text" id="challengeBrief" placeholder="Brief">
-                <input type="number" id="challengePrize" placeholder="Prize Amount">
-                <div id="createChallengeError" class="error"></div>
-                <button onclick="createChallenge()">Create Challenge</button>
-            </div>
-
-            <div class="form-group">
-                <h3>Get All Challenges</h3>
-                <div id="challengesError" class="error"></div>
-                <button onclick="getChallenges()">Get Challenges</button>
-            </div>
-
-            <div class="form-group">
-                <h3>Challenge Actions</h3>
-                <input type="text" id="challengeId" placeholder="Challenge ID">
-                <button onclick="participateInChallenge()">Participate</button>
-                <button onclick="updateChallengeStatus()">Update Status</button>
-                <select id="challengeStatus">
-                    <option value="open">Open</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <h3>Search Challenges</h3>
-                <input type="text" id="challengeSearchInput" placeholder="Search for challenges...">
-                <button onclick="searchChallenges()">Search Challenges</button>
-                <pre id="challengeResults"></pre>
-            </div>
-        </div>
-
-        <!-- Admin Tab -->
-        <div id="Admin" class="tabcontent">
-            <div class="form-group">
-                <h3>Admin Actions</h3>
-                <button onclick="requestAdminRole()">Request Admin Role</button>
-                <div id="adminRequestError" class="error"></div>
-            </div>
-
-            <div class="form-group">
-                <h3>Super Admin Actions</h3>
-                <button onclick="getPendingAdminRequests()">Get Pending Requests</button>
-                <div id="pendingRequestsContainer"></div>
-            </div>
-        </div>
-
-        <div id="response" class="response">
-            <pre></pre>
-        </div>
+    <div class="card">
+        <h3>3. File Upload</h3>
+        <input type="file" id="file" accept="image/*" onchange="validateFile(this)">
+        <div id="fileError" class="error"></div>
+        <button onclick="uploadFile()" id="uploadBtn" disabled>Upload</button>
+        <button onclick="listFiles()">List Files</button>
+        <div id="uploadResponse" class="response"></div>
+        <div id="imageGallery"></div>
     </div>
 
     <script>
-        const API_URL = 'http://localhost:3000/api';
-        let token = localStorage.getItem('token') || '';
+        const PORT = 3000;  // Default port
+        const API_URL = `http://localhost:${PORT}/api`;
+        let token = localStorage.getItem('token');
 
-        // Tab functionality
-        function openTab(evt, tabName) {
-            const tabcontent = document.getElementsByClassName("tabcontent");
-            for (let i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+        // Validation functions
+        function validateEmail(input) {
+            const errorDiv = document.getElementById(`${input.id}Error`);
+            if (!input.value.match(input.pattern)) {
+                input.classList.add('invalid');
+                errorDiv.textContent = 'Please enter a valid email address';
+                return false;
             }
-
-            const tablinks = document.getElementsByClassName("tablinks");
-            for (let i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+            input.classList.remove('invalid');
+            errorDiv.textContent = '';
+            return true;
         }
 
-        // Check API connection on load
-        window.onload = async () => {
-            try {
-                const response = await fetch(`${API_URL}/health`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                const data = await response.json();
-                document.getElementById('connectionStatus').innerHTML = 
-                    `<div class="success">API Status: ${data.status}</div>`;
-            } catch (error) {
-                document.getElementById('connectionStatus').innerHTML = 
-                    `<div class="error">API Connection Error: ${error.message}</div>`;
+        function validatePassword(input) {
+            const errorDiv = document.getElementById(`${input.id}Error`);
+            if (input.value.length < 8) {
+                input.classList.add('invalid');
+                errorDiv.textContent = 'Password must be at least 8 characters';
+                return false;
             }
-        };
+            if (!/[A-Z]/.test(input.value)) {
+                input.classList.add('invalid');
+                errorDiv.textContent = 'Password must contain at least one uppercase letter';
+                return false;
+            }
+            if (!/[0-9]/.test(input.value)) {
+                input.classList.add('invalid');
+                errorDiv.textContent = 'Password must contain at least one number';
+                return false;
+            }
+            input.classList.remove('invalid');
+            errorDiv.textContent = '';
+            return true;
+        }
 
-        async function register() {
-            clearErrors();
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const number = document.getElementById('registerNumber').value;
-            
-            if (!name || !email || !password || !number) {
-                showError('registerError', 'All fields are required');
-                return;
+        function validateField(input, min, max) {
+            const errorDiv = document.getElementById(`${input.id}Error`);
+            if (input.value.length < min || input.value.length > max) {
+                input.classList.add('invalid');
+                errorDiv.textContent = `Length must be between ${min} and ${max} characters`;
+                return false;
             }
+            input.classList.remove('invalid');
+            errorDiv.textContent = '';
+            return true;
+        }
+
+        function validateNumber(input, min, max) {
+            const errorDiv = document.getElementById(`${input.id}Error`);
+            const value = Number(input.value);
+            if (isNaN(value) || value < min || value > max) {
+                input.classList.add('invalid');
+                errorDiv.textContent = `Value must be between ${min} and ${max}`;
+                return false;
+            }
+            input.classList.remove('invalid');
+            errorDiv.textContent = '';
+            return true;
+        }
+
+        function validateDate(input) {
+            const errorDiv = document.getElementById(`${input.id}Error`);
+            const selectedDate = new Date(input.value);
+            const today = new Date();
+            if (selectedDate <= today) {
+                input.classList.add('invalid');
+                errorDiv.textContent = 'Deadline must be in the future';
+                return false;
+            }
+            input.classList.remove('invalid');
+            errorDiv.textContent = '';
+            return true;
+        }
+
+        function validateFile(input) {
+            const errorDiv = document.getElementById('fileError');
+            const uploadBtn = document.getElementById('uploadBtn');
             
+            if (!input.files || !input.files[0]) {
+                errorDiv.textContent = 'Please select a file';
+                uploadBtn.disabled = true;
+                return false;
+            }
+
+            const file = input.files[0];
+            if (!file.type.startsWith('image/')) {
+                errorDiv.textContent = 'Please select an image file';
+                uploadBtn.disabled = true;
+                return false;
+            }
+
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                errorDiv.textContent = 'File size must be less than 5MB';
+                uploadBtn.disabled = true;
+                return false;
+            }
+
+            errorDiv.textContent = '';
+            uploadBtn.disabled = false;
+            return true;
+        }
+
+        function validatePhone(input) {
+            const errorDiv = document.getElementById(`${input.id}Error`);
+            const phoneRegex = /^[0-9]{9,10}$/;  // Allow 9 or 10 digits
+            
+            if (!phoneRegex.test(input.value)) {
+                input.classList.add('invalid');
+                errorDiv.textContent = 'Please enter a valid phone number (9-10 digits)';
+                return false;
+            }
+            input.classList.remove('invalid');
+            errorDiv.textContent = '';
+            return true;
+        }
+
+        // Check if all challenge fields are valid
+        function validateChallengeForm() {
+            const isValid = 
+                validateField(document.getElementById('title'), 10, 200) &&
+                validateField(document.getElementById('brief'), 20, 500) &&
+                validateField(document.getElementById('description'), 50, 5000) &&
+                validateEmail(document.getElementById('contact_email')) &&
+                validateNumber(document.getElementById('prize'), 100, 1000000) &&
+                validateDate(document.getElementById('deadline'));
+            
+            document.getElementById('createChallengeBtn').disabled = !isValid;
+            return isValid;
+        }
+
+        // Add event listeners to challenge form fields
+        ['title', 'brief', 'description', 'contact_email', 'prize', 'deadline'].forEach(id => {
+            const element = document.getElementById(id);
+            element.addEventListener('input', () => validateChallengeForm());
+        });
+
+        // Add connection check
+        async function checkConnection() {
             try {
-                const response = await fetch(`${API_URL}/users/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        name, 
-                        email, 
-                        password,
-                        number,
-                        role: 'user'
-                    })
+                const response = await fetch(`${API_URL}/health`);
+                if (!response.ok) throw new Error('API is not responding');
+                document.getElementById('loginResponse').textContent = 'Connected to API';
+            } catch (error) {
+                document.getElementById('loginResponse').textContent = 
+                    `Cannot connect to API at ${API_URL}. Please ensure the server is running.`;
+            }
+        }
+
+        // Update makeRequest function to handle file uploads better
+        async function makeRequest(endpoint, method = 'GET', body = null, isFormData = false) {
+            try {
+                const headers = new Headers();
+                if (token) headers.append('Authorization', `Bearer ${token}`);
+                if (!isFormData) headers.append('Content-Type', 'application/json');
+
+                const response = await fetch(`${API_URL}${endpoint}`, {
+                    method,
+                    headers,
+                    body: isFormData ? body : (body ? JSON.stringify(body) : null)
                 });
+
                 const data = await response.json();
                 
-                if (!response.ok) throw new Error(data.message || 'Registration failed');
-                
-                showResponse(data);
-                showSuccess('registerError', 'Registration successful! Please login.');
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error(data.message || 'Invalid credentials');
+                    }
+                    throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                }
+
+                return data;
             } catch (error) {
-                showError('registerError', error.message);
+                console.error('Request error:', error); // Log request errors
+                throw error;
             }
         }
 
         async function login() {
-            clearErrors();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (!email || !password) {
-                showError('loginError', 'Email and password are required');
-                return;
-            }
-            
             try {
-                const response = await fetch(`${API_URL}/users/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-                const data = await response.json();
-                
-                if (!response.ok) throw new Error(data.message || 'Login failed');
+                if (!validateEmail(document.getElementById('loginEmail')) ||
+                    !validatePassword(document.getElementById('loginPassword'))) {
+                    throw new Error('Please check all fields are valid');
+                }
+
+                const credentials = {
+                    email: document.getElementById('loginEmail').value.trim().toLowerCase(),
+                    password: document.getElementById('loginPassword').value
+                };
+
+                console.log('Attempting login with:', { email: credentials.email }); // Log attempt
+
+                const data = await makeRequest('/users/login', 'POST', credentials);
                 
                 token = data.token;
                 localStorage.setItem('token', token);
-                showResponse(data);
-                showSuccess('loginSuccess', 'Login successful!');
+                document.getElementById('loginResponse').textContent = 
+                    `Login successful! Token: ${token.slice(0, 20)}...`;
+
+                // Clear form
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
             } catch (error) {
-                showError('loginError', error.message);
+                console.error('Login error:', error); // Log error details
+                document.getElementById('loginResponse').textContent = 
+                    `Login failed: ${error.message}`;
             }
         }
 
-        async function getChallenges() {
-            clearErrors();
+        async function register() {
             try {
-                const headers = { 
-                    'Content-Type': 'application/json'
-                };
-                if (token) {
-                    headers['Authorization'] = `Bearer ${token}`;
+                if (!validateField(document.getElementById('registerName'), 2, 50) ||
+                    !validateEmail(document.getElementById('registerEmail')) ||
+                    !validatePhone(document.getElementById('registerPhone')) ||
+                    !validatePassword(document.getElementById('registerPassword'))) {
+                    throw new Error('Please check all fields are valid');
                 }
-                
-                const response = await fetch(`${API_URL}/challenges`, {
-                    headers
+
+                const data = await makeRequest('/users/register', 'POST', {
+                    name: document.getElementById('registerName').value.trim(),
+                    email: document.getElementById('registerEmail').value.trim().toLowerCase(),
+                    number: document.getElementById('registerPhone').value.trim(),
+                    password: document.getElementById('registerPassword').value,
+                    role: 'user'
                 });
-                const data = await response.json();
-                
-                if (!response.ok) throw new Error(data.message || 'Failed to fetch challenges');
-                
-                showResponse(data);
+
+                document.getElementById('registerResponse').textContent = 
+                    'Registration successful! Please login.';
+                    
+                // Clear form
+                document.getElementById('registerName').value = '';
+                document.getElementById('registerEmail').value = '';
+                document.getElementById('registerPhone').value = '';
+                document.getElementById('registerPassword').value = '';
             } catch (error) {
-                showError('challengesError', error.message);
-            }
-        }
-
-        async function getProfile() {
-            try {
-                const response = await fetch(`${API_URL}/users/profile`, {
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                showResponse(data);
-            } catch (error) {
-                showError('profileError', error.message);
-            }
-        }
-
-        async function updateProfile() {
-            const name = document.getElementById('updateName').value;
-            const email = document.getElementById('updateEmail').value;
-            const number = document.getElementById('updateNumber').value;
-
-            try {
-                const response = await fetch(`${API_URL}/users/profile`, {
-                    method: 'PATCH',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, email, number })
-                });
-                const data = await response.json();
-                showResponse(data);
-            } catch (error) {
-                showError('updateError', error.message);
-            }
-        }
-
-        async function uploadProfilePicture() {
-            const file = document.getElementById('profilePicture').files[0];
-            if (!file) {
-                showError('uploadError', 'No file selected');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('profilePicture', file);
-
-            try {
-                const response = await fetch(`${API_URL}/users/profile-picture`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: formData
-                });
-                const data = await response.json();
-                showResponse(data);
-            } catch (error) {
-                showError('uploadError', error.message);
+                document.getElementById('registerResponse').textContent = 
+                    `Registration failed: ${error.message}`;
             }
         }
 
         async function createChallenge() {
-            const challengeData = {
-                Title: document.getElementById('challengeTitle').value,
-                Deadline: document.getElementById('challengeDeadline').value,
-                contact_email: document.getElementById('challengeEmail').value,
-                Project_Discription: document.getElementById('challengeDescription').value,
-                Brief: document.getElementById('challengeBrief').value,
-                Money_Prize: Number(document.getElementById('challengePrize').value)
-            };
-
             try {
-                const response = await fetch(`${API_URL}/challenges`, {
-                    method: 'POST',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(challengeData)
+                const data = await makeRequest('/challenges', 'POST', {
+                    Title: document.getElementById('title').value,
+                    Brief: document.getElementById('brief').value,
+                    Project_Discription: document.getElementById('description').value,
+                    contact_email: document.getElementById('contact_email').value,
+                    Money_Prize: parseInt(document.getElementById('prize').value),
+                    Deadline: new Date(document.getElementById('deadline').value).toISOString(),
+                    status: 'open'
                 });
-                const data = await response.json();
-                showResponse(data);
+                document.getElementById('challengeResponse').textContent = 
+                    `Challenge created!\n${JSON.stringify(data, null, 2)}`;
             } catch (error) {
-                showError('createChallengeError', error.message);
+                document.getElementById('challengeResponse').textContent = 
+                    `Failed to create challenge: ${error.message}`;
             }
         }
 
-        async function participateInChallenge() {
-            const challengeId = document.getElementById('challengeId').value;
+        async function listChallenges() {
             try {
-                const response = await fetch(`${API_URL}/challenges/${challengeId}/participate`, {
-                    method: 'POST',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                showResponse(data);
+                const data = await makeRequest('/challenges');
+                document.getElementById('challengeResponse').textContent = 
+                    JSON.stringify(data, null, 2);
             } catch (error) {
-                showError('challengesError', error.message);
+                document.getElementById('challengeResponse').textContent = 
+                    `Failed to list challenges: ${error.message}`;
             }
         }
 
-        async function updateChallengeStatus() {
-            const challengeId = document.getElementById('challengeId').value;
-            const status = document.getElementById('challengeStatus').value;
+        async function uploadFile() {
             try {
-                const response = await fetch(`${API_URL}/challenges/${challengeId}/status`, {
-                    method: 'PATCH',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ status })
-                });
-                const data = await response.json();
-                showResponse(data);
+                const file = document.getElementById('file').files[0];
+                if (!file) throw new Error('Please select a file');
+
+                const formData = new FormData();
+                formData.append('file', file);  // Changed to 'file' to match multer config
+
+                const data = await makeRequest('/images/upload', 'POST', formData, true);
+                document.getElementById('uploadResponse').textContent = 
+                    `Upload successful!\n${JSON.stringify(data, null, 2)}`;
+                listFiles();
             } catch (error) {
-                showError('challengesError', error.message);
+                document.getElementById('uploadResponse').textContent = 
+                    `Upload failed: ${error.message}`;
             }
         }
 
-        async function requestAdminRole() {
+        async function listFiles() {
             try {
-                const response = await fetch(`${API_URL}/users/request-admin`, {
-                    method: 'POST',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                showResponse(data);
-            } catch (error) {
-                showError('adminRequestError', error.message);
-            }
-        }
-
-        async function getPendingAdminRequests() {
-            try {
-                const response = await fetch(`${API_URL}/users/pending-admin-requests`, {
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                showResponse(data);
+                const data = await makeRequest('/images');  // Changed from '/images/user'
+                const gallery = document.getElementById('imageGallery');
+                gallery.innerHTML = '';
                 
-                // Display pending requests with approve/reject buttons
-                const container = document.getElementById('pendingRequestsContainer');
-                container.innerHTML = data.map(request => `
-                    <div class="pending-request">
-                        <p>User: ${request.name} (${request.email})</p>
-                        <button onclick="processAdminRequest('${request._id}', 'approved')">Approve</button>
-                        <button onclick="processAdminRequest('${request._id}', 'rejected')">Reject</button>
-                    </div>
-                `).join('');
+                if (data && Array.isArray(data)) {  // Updated to handle array response
+                    data.forEach(image => {
+                        const img = document.createElement('img');
+                        img.src = image.url || image.path;  // Handle both url and path
+                        img.title = image.filename;
+                        gallery.appendChild(img);
+                    });
+                    document.getElementById('uploadResponse').textContent = 
+                        `Found ${data.length} images`;
+                }
             } catch (error) {
-                showError('adminRequestError', error.message);
+                document.getElementById('uploadResponse').textContent = 
+                    `Failed to list files: ${error.message}`;
             }
         }
 
-        async function processAdminRequest(userId, status) {
-            try {
-                const response = await fetch(`${API_URL}/users/process-admin-request/${userId}`, {
-                    method: 'PATCH',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ status })
-                });
-                const data = await response.json();
-                showResponse(data);
-                getPendingAdminRequests(); // Refresh the list
-            } catch (error) {
-                showError('adminRequestError', error.message);
-            }
+        // Check token on load
+        if (token) {
+            document.getElementById('loginResponse').textContent = 
+                `Using existing token: ${token.slice(0, 20)}...`;
         }
 
-        async function searchUsers() {
-            const query = document.getElementById('userSearchInput').value;
-            const response = await fetch(`${API_URL}/users/search?query=${query}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const users = await response.json();
-            document.getElementById('userResults').innerHTML = JSON.stringify(users, null, 2);
-        }
-
-        async function searchChallenges() {
-            const query = document.getElementById('challengeSearchInput').value;
-            const response = await fetch(`${API_URL}/challenges/search?query=${query}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            const challenges = await response.json();
-            document.getElementById('challengeResults').innerHTML = JSON.stringify(challenges, null, 2);
-        }
-
-        // Utility functions
-        function showResponse(data) {
-            document.querySelector('#response pre').innerHTML = 
-                JSON.stringify(data, null, 2);
-        }
-
-        function showError(elementId, message) {
-            document.getElementById(elementId).innerHTML = message;
-        }
-
-        function showSuccess(elementId, message) {
-            document.getElementById(elementId).innerHTML = 
-                `<span class="success">${message}</span>`;
-        }
-
-        function clearErrors() {
-            document.querySelectorAll('.error, .success').forEach(el => {
-                el.innerHTML = '';
-            });
-        }
+        // Call checkConnection when page loads
+        window.addEventListener('load', checkConnection);
     </script>
 </body>
 </html>

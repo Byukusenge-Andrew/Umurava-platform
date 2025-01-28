@@ -7,7 +7,7 @@ import { Model } from 'mongoose';
 import BaseService from './BaseService';
 import Challenge from '../models/Challenge';
 import { IChallenge, ChallengeStatus } from '../types';
-import { ValidationError } from '@/utils/errorHandler';
+import { ValidationError } from '../utils/errorHandler';
 import logger from '../utils/logger';
 
 export default class ChallengeService extends BaseService<IChallenge> {
@@ -65,5 +65,26 @@ export default class ChallengeService extends BaseService<IChallenge> {
 
         await challenge.addParticipant();
         return challenge;
+    }
+
+    /**
+     * @method search
+     * @description Search challenges by query string
+     * @param {string} query - Search query
+     * @returns {Promise<IChallenge[]>} Matching challenges
+     */
+    async search(query: string): Promise<IChallenge[]> {
+        try {
+            return await Challenge.find({
+                $or: [
+                    { Title: { $regex: query, $options: 'i' } },
+                    { Brief: { $regex: query, $options: 'i' } },
+                    { Project_Discription: { $regex: query, $options: 'i' } }
+                ]
+            });
+        } catch (error) {
+            logger.error('Error searching challenges:', error);
+            throw error;
+        }
     }
 }

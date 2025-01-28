@@ -11,19 +11,18 @@ const userController = new UserController();
 // Public routes
 router.post('/login', userController.login);
 router.post('/register', userController.create);
-
+router.post(
+    '/profile/picture',
+    upload.single('profile') as RequestHandler,
+    userController.uploadProfilePicture as RequestHandler
+);
 // Protected routes
 router.use(protect); // All routes below this will be protected
 
 // User routes
 router.get('/profile', userController.getById);
 router.patch('/profile', userController.updateUser);
-// Fix the file upload route by using upload middleware first
-router.post(
-    '/profile/picture',
-    upload.single('profile') as RequestHandler,
-    userController.uploadProfilePicture as RequestHandler
-);
+
 router.get('/stats', userController.getUserStats);
 
 // Admin request routes

@@ -41,11 +41,11 @@ const ChallengeSchema = new Schema<IChallenge>({
     Brief: {
         type: String,
         required: [true, 'Brief is required'],
-        maxlength: [500, 'Brief cannot be more than 500 characters']
+        maxlength: [250, 'Brief cannot be more than 500 characters']
     },
     Money_Prize: {
         type: Number,
-        required: [true, 'Prize amount is required'],
+        required: [true, 'Prize amount required'],
         min: [0, 'Prize amount cannot be negative']
     },
     Description: {
@@ -55,11 +55,8 @@ const ChallengeSchema = new Schema<IChallenge>({
         },
         description: { 
             type: String, 
-            required: true 
-        },
-        order: { 
-            type: Number, 
-            required: true 
+            required: true ,
+            maxlength: [500, 'Description cannot be more than 1000 characters']
         }
     },
     participants: {
@@ -81,13 +78,10 @@ const ChallengeSchema = new Schema<IChallenge>({
 }, {
     timestamps: true // This automatically adds createdAt and updatedAt
 });
-
-// Indexes for better query performance
 ChallengeSchema.index({ creator_id: 1 });
 ChallengeSchema.index({ Deadline: 1 });
 ChallengeSchema.index({ Money_Prize: -1 });
 
-// Static methods for challenge statistics
 ChallengeSchema.statics = {
     async getChallengeStats() {
         try {
@@ -181,5 +175,14 @@ ChallengeSchema.methods.updateStatus = async function(status: ChallengeStatus): 
 ChallengeSchema.methods.getRemainingTime = function(): number {
     return this.deadline?.getTime() - new Date().getTime();
 };
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ChallengeStatus:
+ *       type: string
+ *       enum: [open, ongoing, completed]
+ */
 
 export default model<IChallenge>('Challenge', ChallengeSchema);

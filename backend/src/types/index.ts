@@ -1,5 +1,6 @@
 import { Document, Types } from 'mongoose';
 import { ObjectId } from 'mongodb';
+import { Request } from 'express';
 
 export interface ImageMetadata {
     filename: string;
@@ -67,8 +68,9 @@ export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
+    role: string;
     number: string;
-    role: 'user' | 'admin' | 'super_admin';
+    comparePassword(candidatePassword: string): Promise<boolean>;
     profilePicture?: string;
     picture?: {
         fileId: Types.ObjectId;
@@ -89,7 +91,6 @@ export interface IUser extends Document {
     updatedAt: Date;
     
     // Methods
-    comparedPassword(password: string): Promise<boolean>;
     isSuper(): boolean;
     isAdmin(): boolean;
     isUser(): boolean;
@@ -100,7 +101,7 @@ export interface IUser extends Document {
 interface Description {
     title: string;
     description: string;
-    order: number;
+   
 }
 
 export enum ChallengeStatus {
@@ -116,19 +117,22 @@ export interface IChallenge extends Document {
     Project_Discription: string;
     Brief: string;
     Money_Prize: number;
-    Description: {
-        title: string;
-        description: string;
-        order: number;
-    };
+    Description: Description[];
     participants: number;
     creator_id: Types.ObjectId;
-    status: ChallengeStatus;
+    status: ChallengeStatus ;
     createdAt: Date;
     updatedAt: Date;
     isActive(): boolean;
     addParticipant(): Promise<void>;
     updateStatus(status: ChallengeStatus): Promise<void>;
     getRemainingTime(): number;
+}
+
+export interface AuthRequest extends Request {
+    user?: IUser & {
+        _id: Types.ObjectId;
+    };
+    file?: Express.Multer.File;
 }
 

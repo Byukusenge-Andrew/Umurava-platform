@@ -10,6 +10,10 @@ import userRoutes from './routes/userRoutes';
 import challengeRoutes from './routes/challengeRoutes';
 import config from './config/config';
 import { ValidationError, AuthenticationError, AuthorizationError, NotFoundError } from './utils/errorHandler';
+import swaggerUi from 'swagger-ui-express';
+import { specs } from './config/swagger';
+import imageRoutes from './routes/imageRoutes';
+import path from 'path';
 
 dotenv.config();
 
@@ -18,7 +22,7 @@ const port = process.env.PORT || 3000;
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500'], // Add your test.html origin
+    origin: ['http://localhost:3000', 'http://127.0.0.1:5500'], 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -32,6 +36,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
+// Add this after your middleware setup
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Database connection
 mongoose.connect(config.mongoUrl)
     .then(() => logger.info('Connected to MongoDB'))
@@ -43,6 +50,10 @@ mongoose.connect(config.mongoUrl)
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/challenges', challengeRoutes);
+app.use('/api/images', imageRoutes);
+// Swagger Documentation
+// app.use('/api-docs', swaggerUi.serve());
+// app.use('/api-docs', swaggerUi.setup(specs));
 
 // Error handling middleware
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
