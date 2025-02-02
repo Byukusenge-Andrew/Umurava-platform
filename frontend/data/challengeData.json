@@ -1,0 +1,180 @@
+[
+    {
+        "id": 1,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "UI/UX Design",
+            "Animation"
+        ],
+        "seniority": "Intermediate",
+        "timeline": "15 days"
+    },
+    {
+        "id": 2,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "Web Design",
+            "HTML/CSS",
+            "Figma"
+        ],
+        "seniority": "Junior",
+        "timeline": "10 days"
+    },
+    {
+        "id": 3,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "React Native",
+            "Firebase",
+            "UI/UX"
+        ],
+        "seniority": "Senior",
+        "timeline": "30 days"
+    },
+    {
+        "id": 4,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "Web Design",
+            "WordPress",
+            "SEO"
+        ],
+        "seniority": "Intermediate",
+        "timeline": "20 days"
+    },
+    {
+        "id": 5,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "AI",
+            "Natural Language Processing"
+        ],
+        "seniority": "Senior",
+        "timeline": "25 days"
+    },
+    {
+        "id": 6,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "Figma",
+            "UI/UX",
+            "Finance"
+        ],
+        "seniority": "Intermediate",
+        "timeline": "18 days"
+    },
+    {
+        "id": 7,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "HTML",
+            "CSS",
+            "JavaScript"
+        ],
+        "seniority": "Junior",
+        "timeline": "7 days"
+    },
+    {
+        "id": 8,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "UI/UX",
+            "Wireframing",
+            "Prototyping"
+        ],
+        "seniority": "Intermediate",
+        "timeline": "14 days"
+    },
+    {
+        "id": 9,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "React Native",
+            "Firebase",
+            "Design"
+        ],
+        "seniority": "Senior",
+        "timeline": "28 days"
+    },
+    {
+        "id": 10,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "React",
+            "Node.js",
+            "MongoDB"
+        ],
+        "seniority": "Senior",
+        "timeline": "30 days"
+    },
+    {
+        "id": 11,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "Next.js",
+            "CMS",
+            "SEO"
+        ],
+        "seniority": "Intermediate",
+        "timeline": "21 days"
+    },
+    {
+        "id": 12,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "UI/UX",
+            "Accessibility",
+            "Design Systems"
+        ],
+        "seniority": "Senior",
+        "timeline": "40 days"
+    },
+    {
+        "id": 13,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "Fintech",
+            "UI/UX",
+            "Security"
+        ],
+        "seniority": "Senior",
+        "timeline": "35 days"
+    },
+    {
+        "id": 14,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "React",
+            "Stripe",
+            "Firebase"
+        ],
+        "seniority": "Intermediate",
+        "timeline": "22 days"
+    },
+    {
+        "id": 15,
+        "title": "Design a Dashboard for SokoFund",
+        "image": "/image-4.png",
+        "skills": [
+            "IoT",
+            "React",
+            "Node.js"
+        ],
+        "seniority": "Senior",
+        "timeline": "30 days"
+    }
+]
