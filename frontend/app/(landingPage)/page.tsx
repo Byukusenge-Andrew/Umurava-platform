@@ -5,7 +5,7 @@ import { BriefcaseBusiness, FileText, Medal, TrendingUp } from "lucide-react";
 import { CarouselComponent } from "./_components/Carousel";
 import { Badge } from "@/components/ui/badge";
 import challengeData from "@/data/challengeData.json";
-import ChallengeCard from "./_components/ChallengeCard";
+import ChallengeCard from "../../components/ChallengeCard";
 import Link from "next/link";
 import { TestimonialCarouselComponent } from "./_components/TestimonialCarousel";
 

@@ -1,7 +1,7 @@
 import { MoveLeft } from 'lucide-react'
 import React from 'react'
 import challengeData from "@/data/challengeData.json";
-import ChallengeCard from '../_components/ChallengeCard';
+import ChallengeCard from '../../../components/ChallengeCard';
 import { GoBackButton } from '@/components/Components';
 
 function page() {
