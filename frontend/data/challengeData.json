@@ -7,174 +7,488 @@
             "UI/UX Design",
             "Animation"
         ],
-        "seniority": "Intermediate",
-        "timeline": "15 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 2,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "Web Design",
-            "HTML/CSS",
-            "Figma"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Junior",
-        "timeline": "10 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$500",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 3,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "React Native",
-            "Firebase",
-            "UI/UX"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Senior",
-        "timeline": "30 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 4,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "Web Design",
-            "WordPress",
-            "SEO"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Intermediate",
-        "timeline": "20 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 5,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "AI",
-            "Natural Language Processing"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Senior",
-        "timeline": "25 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 6,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "Figma",
-            "UI/UX",
-            "Finance"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Intermediate",
-        "timeline": "18 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 7,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "HTML",
-            "CSS",
-            "JavaScript"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Junior",
-        "timeline": "7 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 8,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "UI/UX",
-            "Wireframing",
-            "Prototyping"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Intermediate",
-        "timeline": "14 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 9,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "React Native",
-            "Firebase",
-            "Design"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Senior",
-        "timeline": "28 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 10,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "React",
-            "Node.js",
-            "MongoDB"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Senior",
-        "timeline": "30 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 11,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "Next.js",
-            "CMS",
-            "SEO"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Intermediate",
-        "timeline": "21 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     },
     {
         "id": 12,
         "title": "Design a Dashboard for SokoFund",
         "image": "/image-4.png",
         "skills": [
-            "UI/UX",
-            "Accessibility",
-            "Design Systems"
+            "UI/UX Design",
+            "Animation"
         ],
-        "seniority": "Senior",
-        "timeline": "40 days"
-    },
-    {
-        "id": 13,
-        "title": "Design a Dashboard for SokoFund",
-        "image": "/image-4.png",
-        "skills": [
-            "Fintech",
-            "UI/UX",
-            "Security"
-        ],
-        "seniority": "Senior",
-        "timeline": "35 days"
-    },
-    {
-        "id": 14,
-        "title": "Design a Dashboard for SokoFund",
-        "image": "/image-4.png",
-        "skills": [
-            "React",
-            "Stripe",
-            "Firebase"
-        ],
-        "seniority": "Intermediate",
-        "timeline": "22 days"
-    },
-    {
-        "id": 15,
-        "title": "Design a Dashboard for SokoFund",
-        "image": "/image-4.png",
-        "skills": [
-            "IoT",
-            "React",
-            "Node.js"
-        ],
-        "seniority": "Senior",
-        "timeline": "30 days"
+        "seniority": "Advanced",
+        "timeline": "7 days",
+        "challengeDetails": {
+            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+            "contactEmail": "talent@umurava.africa",
+            "challengeCategory": "Web design",
+            "moneyPrize": "$150-$400",
+            "deliverables": [
+                "Requirements Catalog and User Interaction Diagram",
+                "User Interface Mockups",
+                "Payroll and HR System Design Completed"
+            ],
+            "tasks": {
+                "productRequirements": [
+                    "UX research to understand Project Requirements",
+                    "Understanding User Needs",
+                    "Understanding Business Goals",
+                    "Determine interaction between users",
+                    "Requirements Catalog"
+                ],
+                "productDesign": [
+                    "User Interface Design for each step",
+                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+                    "Provide a feedback session for in-development guidance" 
+                ]
+            },
+            "notes": [
+                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
+            ]
+        }
     }
 ]

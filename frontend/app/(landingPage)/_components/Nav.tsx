@@ -9,9 +9,9 @@ import React, { ComponentProps } from 'react'
 const Nav = ({ children }: { children: React.ReactNode }) => {
     return (
         <nav className='bg-white flex items-center justify-between font-dm-sans py-3 px-14 fixed top-0 left-0 right-0 z-10'>
-            <div className='flex items-center justify-center font-bold'>
+            <div className='flex items-center justify-center gap-1 font-bold'>
                 <Image
-                    src="/favicon.svg"
+                    src="/favicon-2.png"
                     alt="Umurava logo"
                     width={50}
                     height={5}

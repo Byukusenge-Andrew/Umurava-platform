@@ -1,9 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { ChallengeButton } from "./Components";
 
 interface ChallengeProps {
     challenge: {
+        id: number;
         title: string;
         image: string;
         skills: string[];
@@ -47,7 +49,7 @@ export default function ChallengeCard({ challenge }: ChallengeProps) {
                 </div>
             </div>
             <div className="border-t p-3">
-                <Button className='bg-primary text-white text-xs py-0'>View Challenge</Button>
+                <ChallengeButton id={challenge.id} title={challenge.title} />
             </div>
         </div>
     );
