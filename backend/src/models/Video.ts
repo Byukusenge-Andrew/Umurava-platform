@@ -1,56 +1,44 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import logger from "../utils/logger";
 
-interface IVideo {
+export interface IVideo extends Document {
     filename: string;
-    path: string;
+    url: string;
     mimetype: string;
     size: number;
     duration: number;
-    metadata?: {
-        resolution?: string;
-        format?: string;
-        bitrate?: number;
-    };
+    uploadDate: Date;
 }
 
-const VideoSchema = new Schema<IVideo>({
+const VideoSchema = new Schema({
     filename: {
         type: String,
-        required: [true, 'Filename is required'],
-        trim: true
+        required: true
     },
-    path: {
+    url: {
         type: String,
-        required: [true, 'File path is required'],
+        required: true,
         unique: true
     },
     mimetype: {
         type: String,
-        required: [true, 'File type is required'],
-        enum: ['video/mp4', 'video/webm', 'video/quicktime']
+        required: true
     },
     size: {
         type: Number,
-        required: [true, 'File size is required'],
-        max: [104857600, 'File size cannot exceed 100MB'] // 100MB limit
+        required: true
     },
     duration: {
         type: Number,
-        required: [true, 'Video duration is required'],
-        max: [3600, 'Video duration cannot exceed 1 hour'] // 1 hour limit in seconds
+        default: 0
     },
-    metadata: {
-        resolution: String,
-        format: String,
-        bitrate: Number
+    uploadDate: {
+        type: Date,
+        default: Date.now
     }
-}, {
-    timestamps: true
 });
 
-// Indexes
+// Add text index for better search
 VideoSchema.index({ filename: 'text' });
-VideoSchema.index({ createdAt: -1 });
 
 export default model<IVideo>('Video', VideoSchema);

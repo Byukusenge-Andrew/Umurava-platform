@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import Video from '../models/Video';
 import asyncHandler from '../middleware/async';
 import ErrorResponse from '../utils/errorResponse';
-import logger from '../utils/logger';
+import { ValidationError } from '../utils/errorHandler';
+import VideoStorageService from '../services/VideoStorageService';
 
 class VideoController {
     getAll = asyncHandler(async (req: Request, res: Response) => {
@@ -15,17 +16,14 @@ class VideoController {
             throw new ErrorResponse('Please upload a video file', 400);
         }
 
+        const videoUrl = await VideoStorageService.uploadVideo(req.file);
+
         const video = await Video.create({
-            filename: req.file.filename,
-            path: req.file.path,
+            filename: req.file.originalname,
+            url: videoUrl,
             mimetype: req.file.mimetype,
             size: req.file.size,
-            duration: req.body.duration || 0,
-            metadata: {
-                resolution: req.body.resolution,
-                format: req.body.format,
-                bitrate: req.body.bitrate
-            }
+            duration: req.body.duration || 0
         });
 
         res.status(201).json({ success: true, data: video });
@@ -33,14 +31,49 @@ class VideoController {
 
     delete = asyncHandler(async (req: Request, res: Response) => {
         const video = await Video.findById(req.params.id);
-        
         if (!video) {
             throw new ErrorResponse('Video not found', 404);
         }
 
-        // Add authorization check if needed
+        // Delete from Supabase storage
+        await VideoStorageService.deleteVideo(video.url);
+        
+        // Delete from database
         await video.deleteOne();
+        
         res.status(200).json({ success: true, data: {} });
+    });
+
+    getAllVideos = asyncHandler(async (req: Request, res: Response) => {
+        const { page, limit } = req.query;
+        const videos = await VideoStorageService.listVideos(
+            Number(page) || 1,
+            Number(limit) || 20
+        );
+
+        res.status(200).json({
+            success: true,
+            count: videos.length,
+            data: videos
+        });
+    });
+
+    searchVideos = asyncHandler(async (req: Request, res: Response) => {
+        const { name } = req.query;
+        
+        if (!name || typeof name !== 'string') {
+            throw new ValidationError('Search term is required');
+        }
+
+        const videos = await Video.find({
+            filename: { $regex: name, $options: 'i' }
+        });
+
+        res.status(200).json({
+            success: true,
+            count: videos.length,
+            data: videos
+        });
     });
 }
 

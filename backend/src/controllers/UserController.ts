@@ -3,8 +3,8 @@
  * @description Handles user-related HTTP requests
  */
 
-import { Request, Response } from 'express';
-import { Model, Types } from 'mongoose';
+import { Request, Response, NextFunction } from 'express';
+import { Model, Types, Document } from 'mongoose';
 import BaseController from './BaseController';
 import bcrypt from 'bcryptjs';
 import { AdminRequestStatus } from '../types';
@@ -14,8 +14,14 @@ import User from '../models/User';
 import { IUser, File } from '../types';
 import logger from '../utils/logger';
 import { upload } from '@/utils/gridfs';
-import { AuthenticationError, AuthorizationError } from '../utils/errorHandler';
-import { ValidationError } from '../utils/errorHandler';
+import { AuthenticationError, AuthorizationError, ValidationError, ErrorResponse, asyncHandler } from '../utils/errorHandler';
+import EmailService from '../services/EmailService';
+// import AppwriteService from '../services/AppwriteService';
+import { AuthRequest } from '../types';
+import { uploadImage } from '../middleware/upload';
+import mongoose from 'mongoose';
+import CloudStorageService from '../services/CloudStorageService';
+
 
 declare module 'express' {
     interface Request {
@@ -43,25 +49,27 @@ export default class UserController extends BaseController<IUser> {
      * @param {Response} res - Express response object
      * @returns {Promise<void>}
      */
-    login = async (req: Request, res: Response): Promise<void> => {
+    login = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         try {
             const { email, password } = req.body;
             console.log('Login attempt:', { email }); // Add logging
 
-            const user = await User.findOne({ email }).select('+password');
+            const user = await User.findOne({ email }).select('+password') as IUser & Document;
             
             if (!user) {
                 console.log('User not found:', { email }); // Add logging
-                res.status(401).json({ message: 'Invalid credentials' });
-                return;
+                throw new ErrorResponse('Invalid credentials', 401);
+            }
+
+            if (!user.isEmailVerified) {
+                throw new ErrorResponse('Please verify your email first', 403);
             }
 
             const isMatch = await user.comparePassword(password);
             console.log('Password match:', isMatch); // Add logging
 
             if (!isMatch) {
-                res.status(401).json({ message: 'Invalid credentials' });
-                return;
+                throw new ErrorResponse('Invalid credentials', 401);
             }
 
             // Generate JWT token
@@ -82,9 +90,9 @@ export default class UserController extends BaseController<IUser> {
             });
         } catch (error) {
             console.error('Login error:', error); // Add logging
-            res.status(500).json({ message: 'Internal server error' });
+            throw error;
         }
-    };
+    });
 
     /**
      * @method uploadProfilePicture
@@ -96,7 +104,7 @@ export default class UserController extends BaseController<IUser> {
      */
     uploadProfilePicture = async (req: Request, res: Response): Promise<void> => {
         try {
-            const user = await User.findById(req.user?._id);
+            const user = await User.findById(req.user?._id) as IUser;
             if (!user) {
                 throw new AuthenticationError('User not found');
             }
@@ -105,20 +113,23 @@ export default class UserController extends BaseController<IUser> {
                 throw new ValidationError('No file uploaded');
             }
 
-            user.picture = {
-                fileId: new Types.ObjectId(req.file.filename),
-                metadata: {
-                    filename: req.file.originalname,
-                    contentType: req.file.mimetype,
-                    length: req.file.size,
-                    uploadDate: new Date()
-                }
-            };
+            // Delete old image if exists
+            if (user.profileImageUrl) {
+                await CloudStorageService.deleteFile(user.profileImageUrl);
+            }
 
+            // Upload new image
+            const fileUrl = await CloudStorageService.uploadFile(req.file);
+
+            // Update user
+            user.profileImageUrl = fileUrl;
             await user.save();
+
             res.status(200).json({
                 success: true,
-                data: user
+                data: {
+                    imageUrl: fileUrl
+                }
             });
         } catch (error) {
             logger.error('Error uploading profile picture:', error);
@@ -131,7 +142,7 @@ export default class UserController extends BaseController<IUser> {
             const user = await User.findById(req.user?._id)
                 .populate('completedChallenges')
                 .populate('ongoingChallenges')
-                .populate('createdChallenges');
+                .populate('createdChallenges') as IUser;
 
             if (!user) {
                 throw new AuthenticationError('User not found');
@@ -164,10 +175,10 @@ export default class UserController extends BaseController<IUser> {
         try {
             const { id } = req.params;
             const updateData = { ...req.body };
-            const currentUser = req.user as IUser; // Assuming user is set by auth middleware
+            const currentUser = req.user as IUser; 
 
             // Check if user exists
-            const user = await User.findById(id);
+            const user = await User.findById(id) as IUser;
             if (!user) {
                 res.status(404).json({ message: 'User not found' });
                 return;
@@ -197,7 +208,7 @@ export default class UserController extends BaseController<IUser> {
 
             // Validate admin-specific fields
             if (user.role === 'admin' && !currentUser.isAdmin()) {
-                const adminFields = ['isSuper', 'managedUsers'];
+                const adminFields = ['managedUsers'];
                 adminFields.forEach(field => {
                     if (field in updateData) {
                         delete updateData[field];
@@ -260,7 +271,7 @@ export default class UserController extends BaseController<IUser> {
             const { id } = req.params;
             const { completedchallenge, OngoingChallenge, challengecreated } = req.body;
 
-            const user = await User.findById(id);
+            const user = await User.findById(id) as IUser;
             if (!user) {
                 res.status(404).json({ message: 'User not found' });
                 return;
@@ -291,90 +302,90 @@ export default class UserController extends BaseController<IUser> {
         }
     };
 
-    requestAdminRole = async (req: Request, res: Response): Promise<void> => {
-        try {
-            const userId = req.user?._id;
-            const user = await User.findById(userId);
+    // requestAdminRole = async (req: Request, res: Response): Promise<void> => {
+    //     try {
+    //         const userId = req.user?._id;
+    //         const user = await User.findById(userId) as IUser;
 
-            if (!user) {
-                res.status(404).json({ message: 'User not found' });
-                return;
-            }
+    //         if (!user) {
+    //             res.status(404).json({ message: 'User not found' });
+    //             return;
+    //         }
 
-            await user.requestAdminRole();
-            res.status(200).json({
-                message: 'Admin role request submitted successfully',
-                status: user.adminRequest?.status
-            });
-        } catch (error) {
-            logger.error('Error in requestAdminRole:', error);
-            res.status(400).json({ message: error instanceof Error ? error.message : 'Error processing request' });
-        }
-    };
+    //         await user.requestAdminRole();
+    //         res.status(200).json({
+    //             message: 'Admin role request submitted successfully',
+    //             status: user.adminRequest?.status
+    //         });
+    //     } catch (error) {
+    //         logger.error('Error in requestAdminRole:', error);
+    //         res.status(400).json({ message: error instanceof Error ? error.message : 'Error processing request' });
+    //     }
+    // };
 
-    processAdminRequest = async (req: Request, res: Response): Promise<void> => {
-        try {
-            const { userId } = req.params;
-            const { status, reason } = req.body;
-            const superUser = req.user as IUser;
+    // processAdminRequest = async (req: Request, res: Response): Promise<void> => {
+    //     try {
+    //         const { userId } = req.params;
+    //         const { status, reason } = req.body;
+    //         const superUser = req.user as IUser;
 
-            if (!superUser || !superUser.isSuper()) {
-                res.status(403).json({ message: 'Only super users can process admin requests' });
-                return;
-            }
+    //         if (!superUser || !superUser.isSuper()) {
+    //             res.status(403).json({ message: 'Only super users can process admin requests' });
+    //             return;
+    //         }
 
-            const user = await User.findById(userId);
-            if (!user) {
-                res.status(404).json({ message: 'User not found' });
-                return;
-            }
+    //         const user = await User.findById(userId) as IUser;
+    //         if (!user) {
+    //             res.status(404).json({ message: 'User not found' });
+    //             return;
+    //         }
 
-            if (user.adminRequest?.status !== AdminRequestStatus.PENDING) {
-                res.status(400).json({ message: 'No pending admin request found' });
-                return;
-            }
+    //         if (user.adminRequest?.status !== AdminRequestStatus.PENDING) {
+    //             res.status(400).json({ message: 'No pending admin request found' });
+    //             return;
+    //         }
 
-            user.adminRequest = {
-                ...user.adminRequest,
-                status,
-                processedBy: superUser._id as Types.ObjectId,
-                processedDate: new Date(),
-                reason
-            };
+    //         user.adminRequest = {
+    //             ...user.adminRequest,
+    //             status,
+    //             processedBy: superUser._id as Types.ObjectId,
+    //             processedDate: new Date(),
+    //             reason
+    //         };
 
-            if (status === AdminRequestStatus.APPROVED) {
-                user.role = 'admin';
-            }
+    //         if (status === AdminRequestStatus.APPROVED) {
+    //             user.role = 'admin';
+    //         }
 
-            await user.save();
-            res.status(200).json({
-                message: `Admin request ${status}`,
-                user
-            });
-        } catch (error) {
-            logger.error('Error in processAdminRequest:', error);
-            res.status(500).json({ message: 'Internal server error' });
-        }
-    };
+    //         await user.save();
+    //         res.status(200).json({
+    //             message: `Admin request ${status}`,
+    //             user
+    //         });
+    //     } catch (error) {
+    //         logger.error('Error in processAdminRequest:', error);
+    //         res.status(500).json({ message: 'Internal server error' });
+    //     }
+    // };
 
-    getPendingAdminRequests = async (req: Request, res: Response): Promise<void> => {
-        try {
-            const superUser = req.user as IUser;
-            if (!superUser || !superUser.isSuper()) {
-                res.status(403).json({ message: 'Only super users can view pending requests' });
-                return;
-            }
+    // getPendingAdminRequests = async (req: Request, res: Response): Promise<void> => {
+    //     try {
+    //         const superUser = req.user as IUser;
+    //         if (!superUser || !superUser.isSuper()) {
+    //             res.status(403).json({ message: 'Only super users can view pending requests' });
+    //             return;
+    //         }
 
-            const pendingRequests = await User.find({
-                'adminRequest.status': AdminRequestStatus.PENDING
-            }).select('-password');
+    //         const pendingRequests = await User.find({
+    //             'adminRequest.status': AdminRequestStatus.PENDING
+    //         }).select('-password');
 
-            res.status(200).json(pendingRequests);
-        } catch (error) {
-            logger.error('Error in getPendingAdminRequests:', error);
-            res.status(500).json({ message: 'Internal server error' });
-        }
-    };
+    //         res.status(200).json(pendingRequests);
+    //     } catch (error) {
+    //         logger.error('Error in getPendingAdminRequests:', error);
+    //         res.status(500).json({ message: 'Internal server error' });
+    //     }
+    // };
 
     searchUsers = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -382,11 +393,250 @@ export default class UserController extends BaseController<IUser> {
             if (typeof query !== 'string') {
                 throw new Error('Invalid query type');
             }
-            const users = await User.find({ $text: { $search: query } }).select('-password');
+            const users = await User.find({ $text: { $search: query } }).select('-password') as IUser[];
             res.status(200).json(users);
         } catch (error) {
             logger.error('Error in searchUsers:', error);
             res.status(500).json({ message: 'Internal server error' });
         }
     };
+
+    register = asyncHandler(async (req: AuthRequest, res: Response) => {
+        let createdUser: IUser | null = null;
+        let fileUrl: string | null = null;
+
+        try {
+            // 1. Input Validation
+            const { email, password, name, specialty, number } = req.body;
+            
+            if (!email || !password || !name || !specialty || !number) {
+                throw new ValidationError('Please provide all required fields');
+            }
+
+            // 2. Email Format Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                throw new ValidationError('Please provide a valid email address');
+            }
+
+            // 3. Password Strength Validation
+            if (password.length < 8) {
+                throw new ValidationError('Password must be at least 8 characters long');
+            }
+            if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+                throw new ValidationError('Password must contain uppercase, lowercase and numbers');
+            }
+
+            // 4. Check for Existing User
+            const existingUser = await User.findOne({ 
+                $or: [
+                    { email: email.toLowerCase() },
+                    { number }
+                ]
+            });
+            
+            if (existingUser) {
+                throw new ValidationError('Email or phone number already registered');
+            }
+
+            // 5. File Upload Validation
+            if (req.file) {
+                // Validate file type
+                const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedMimeTypes.includes(req.file.mimetype)) {
+                    throw new ValidationError('Please upload a valid image file (JPEG, PNG, or GIF)');
+                }
+
+                // Validate file size (e.g., 5MB limit)
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (req.file.size > maxSize) {
+                    throw new ValidationError('File size must be less than 5MB');
+                }
+
+                try {
+                    fileUrl = await CloudStorageService.uploadFile(req.file);
+                    logger.info(`File uploaded successfully, URL: ${fileUrl}`);
+                } catch (error) {
+                    logger.error('Error uploading file:', error);
+                    throw new ValidationError('Failed to upload profile image');
+                }
+            }
+
+            // 6. Sanitize and Create User
+            createdUser = await User.create({
+                name: name.trim(),
+                email: email.toLowerCase().trim(),
+                password, // Password will be hashed by mongoose pre-save hook
+                specialty: specialty.trim(),
+                number: number.trim(),
+                isEmailVerified: true,
+                profileImageUrl: fileUrl,
+                role: 'user' // Explicitly set role
+            });
+
+            // 7. Remove Sensitive Data from Response
+            const userResponse = {
+                _id: createdUser._id,
+                name: createdUser.name,
+                email: createdUser.email,
+                specialty: createdUser.specialty,
+                profileImageUrl: createdUser.profileImageUrl
+            };
+
+            res.status(201).json({
+                success: true,
+                message: 'Registration successful. You can now login.',
+                data: {
+                    user: userResponse,
+                    imageUrl: fileUrl
+                }
+            });
+
+        } catch (error) {
+            // 8. Clean up on Error
+            if (fileUrl) {
+                try {
+                    await CloudStorageService.deleteFile(fileUrl);
+                } catch (deleteError) {
+                    logger.error('Error cleaning up uploaded file:', deleteError);
+                }
+            }
+
+            logger.error('Registration error:', error);
+            
+            if (error instanceof ValidationError) {
+                res.status(400).json({
+                    success: false,
+                    message: error.message
+                });
+            } else {
+                // 9. Generic Error Message for Production
+                res.status(500).json({
+                    success: false,
+                    message: 'Registration failed. Please try again later.'
+                });
+            }
+        }
+    });
+
+    // Comment out these methods
+    /*
+    verifyEmail = asyncHandler(async (req: Request, res: Response) => {
+        const { token } = req.params;
+
+        const decoded = jwt.verify(token, config.jwtSecret) as { userId: string };
+        const user = await User.findById(decoded.userId) as IUser & Document;
+
+        if (!user) {
+            throw new ErrorResponse('Invalid verification token', 400);
+        }
+
+        user.isEmailVerified = true;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Email verified successfully'
+        });
+    });
+
+    resendVerificationEmail = asyncHandler(async (req: Request, res: Response) => {
+        const { email } = req.body;
+
+        if (!email) {
+            throw new ValidationError('Please provide an email address');
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new ValidationError('User not found');
+        }
+
+        if (user.isEmailVerified) {
+            throw new ValidationError('Email is already verified');
+        }
+
+        // Send verification email
+        await EmailService.sendVerificationEmail(
+            user.email,
+            user.name,
+            (user._id as unknown as string)
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Verification email has been resent. Please check your inbox.'
+        });
+    });
+    */
+
+    // Add ownership check middleware
+    checkImageOwnership = asyncHandler(async (req: AuthRequest, res: Response, next: NextFunction) => {
+        const user = await User.findById(req.params.userId);
+        
+        if (!user) {
+            throw new ErrorResponse('User not found', 404);
+        }
+
+        if (typeof user._id === 'string' && user._id.toString() !== req.user?._id.toString()) {
+            throw new ErrorResponse('Not authorized to modify this image', 403);
+        }
+
+        next();
+    });
+
+    // Update profile picture with ownership check
+   
+    resendVerificationEmail = asyncHandler(async (req: Request, res: Response) => {
+        const { email } = req.body;
+
+        if (!email) {
+            throw new ValidationError('Please provide an email address');
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new ValidationError('User not found');
+        }
+
+        if (user.isEmailVerified) {
+            throw new ValidationError('Email is already verified');
+        }
+
+        // Send verification email
+        await EmailService.sendVerificationEmail(
+            user.email,
+            user.name,
+            (user._id as unknown as string)
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Verification email has been resent. Please check your inbox.'
+        });
+    });
+
+    searchBySpecialty = asyncHandler(async (req: Request, res: Response) => {
+        const { specialty } = req.query;
+        
+        if (!specialty || typeof specialty !== 'string') {
+            throw new ValidationError('Specialty search term is required');
+        }
+
+        // Case-insensitive search with partial matching
+        const users = await User.find({
+            specialty: { 
+                $regex: specialty, 
+                $options: 'i' 
+            }
+        }).select('-password');
+
+        res.status(200).json({
+            success: true,
+            count: users.length,
+            data: users
+        });
+    });
 }

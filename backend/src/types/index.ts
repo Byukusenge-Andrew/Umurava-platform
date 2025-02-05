@@ -68,10 +68,11 @@ export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    role: string;
+    role: 'user' | 'admin' | 'super_admin';
     number: string;
     comparePassword(candidatePassword: string): Promise<boolean>;
     profilePicture?: string;
+    profileImageUrl?: string;
     picture?: {
         fileId: Types.ObjectId;
         metadata: ImageMetadata;
@@ -89,6 +90,12 @@ export interface IUser extends Document {
     };
     createdAt: Date;
     updatedAt: Date;
+    isEmailVerified: boolean;
+    emailVerificationToken?: string;
+    emailVerificationExpires?: Date;
+    appwriteImageUrl?: string;
+    appwriteImageId?: string;
+    specialty: string;
     
     // Methods
     isSuper(): boolean;

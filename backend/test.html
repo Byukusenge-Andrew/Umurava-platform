@@ -82,6 +82,12 @@
 
     <div class="card">
         <h3>2. Register</h3>
+        <input type="file" 
+               id="registerImage" 
+               accept="image/*"
+               onchange="validateFile(this, 'registerImageError')"
+        >
+        <div id="registerImageError" class="error"></div>
         <input type="text" id="registerName" placeholder="Full Name" required
                minlength="2" maxlength="50" onchange="validateField(this, 2, 50)">
         <div id="registerNameError" class="error"></div>
@@ -96,10 +102,14 @@
         <input type="password" id="registerPassword" placeholder="Password" required
                minlength="8" onchange="validatePassword(this)">
         <div id="registerPasswordError" class="error"></div>
+        <div class="form-group">
+            <label for="specialty">Specialty:</label>
+            <input type="text" id="specialty" name="specialty" class="form-control" required>
+        </div>
         <button onclick="register()" id="registerBtn">Register</button>
         <div id="registerResponse" class="response"></div>
     </div>
-
+           
     <div class="card">
         <h3>2. Challenge Management</h3>
         <input type="text" id="title" placeholder="Challenge Title" required
@@ -214,9 +224,9 @@
             return true;
         }
 
-        function validateFile(input) {
-            const errorDiv = document.getElementById('fileError');
-            const uploadBtn = document.getElementById('uploadBtn');
+        function validateFile(input, errorId) {
+            const errorDiv = document.getElementById(errorId);
+            const uploadBtn = document.getElementById('registerBtn');
             
             if (!input.files || !input.files[0]) {
                 errorDiv.textContent = 'Please select a file';
@@ -357,16 +367,24 @@
                     throw new Error('Please check all fields are valid');
                 }
 
-                const data = await makeRequest('/users/register', 'POST', {
-                    name: document.getElementById('registerName').value.trim(),
-                    email: document.getElementById('registerEmail').value.trim().toLowerCase(),
-                    number: document.getElementById('registerPhone').value.trim(),
-                    password: document.getElementById('registerPassword').value,
-                    role: 'user'
-                });
+                const formData = new FormData();
+                formData.append('name', document.getElementById('registerName').value.trim());
+                formData.append('email', document.getElementById('registerEmail').value.trim().toLowerCase());
+                formData.append('number', document.getElementById('registerPhone').value.trim());
+                formData.append('password', document.getElementById('registerPassword').value);
+                formData.append('role', 'user');
+                formData.append('specialty', document.getElementById('specialty').value);
 
+                // Add image if selected
+                const imageFile = document.getElementById('registerImage').files[0];
+                if (imageFile) {
+                    formData.append('profileImage', imageFile);
+                }
+
+                const data = await makeRequest('/users/register', 'POST', formData, true);
+                
                 document.getElementById('registerResponse').textContent = 
-                    'Registration successful! Please login.';
+                    'Registration successful! Please check your email to verify your account.';
                     
                 // Clear form
                 document.getElementById('registerName').value = '';

@@ -5,7 +5,7 @@
 
 import { Document, Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-import { IUser, AdminRequestStatus } from "../types";
+import { IUser } from "../types";
 import logger from "../utils/logger";
 
 /**
@@ -44,14 +44,34 @@ const UserSchema = new Schema<IUser>({
     number: {
         type: String,
         required: [true, 'Phone number is required'],
-        unique: true
+        unique: true,
+        match: [/^[0-9]{10}$/, 'Please enter a valid phone number (10 digits)'],
+        validate: {
+            validator: async function(number: string) {
+                if (this.isNew || this.isModified('number')) {
+                    const exists = await model('User').countDocuments({ number });
+                    return !exists;
+                }
+                return true;
+            },
+            message: 'This phone number is already registered'
+        }
     },
     role: {
         type: String,
-        enum: ['user', 'admin', 'super_admin'],
+        enum: ['user', 'admin'],
         default: 'user'
     },
-    profilePicture: String,
+    profileImageUrl: {
+        type: String,
+        default: null
+    },
+    specialty: {
+        type: String,
+        required: [true, 'Please add your specialty'],
+        trim: true,
+        index: true
+    },
     
     // User-only attributes
     completedChallenges: [{
@@ -71,23 +91,7 @@ const UserSchema = new Schema<IUser>({
         ref: 'Challenge',
         default: []
     }],
-    adminRequest: {
-        status: {
-            type: String,
-            enum: ['pending', 'approved', 'rejected'],
-            default: 'pending'
-        },
-        requestDate: {
-            type: Date,
-            default: Date.now
-        },
-        processedBy: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        processedDate: Date,
-        reason: String
-    }
+    
 }, {
     timestamps: true,
 });
@@ -110,36 +114,6 @@ UserSchema.methods.isUser = function(): boolean {
     return this.role === 'user';
 };
 
-/**
- * @method isSuper
- * @description Checks if user has super admin role
- * @returns {boolean} True if user is super admin
- */
-UserSchema.methods.isSuper = function(): boolean {
-    return this.role === 'super_admin';
-};
-
-/**
- * @method requestAdminRole
- * @description Request admin role for current user
- * @throws {Error} If user is already admin or has pending request
- * @returns {Promise<void>}
- */
-UserSchema.methods.requestAdminRole = async function(): Promise<void> {
-    if (this.role === 'admin') {
-        throw new Error('User is already an admin');
-    }
-    if (this.adminRequest?.status === AdminRequestStatus.PENDING) {
-        throw new Error('Admin request is already pending');
-    }
-    this.adminRequest = {
-        status: AdminRequestStatus.PENDING,
-        requestDate: new Date()
-    };
-    await this.save();
-};
-
-// Middleware to clean up role-specific fields when role changes
 UserSchema.pre('save', function(next) {
     if (this.isModified('role')) {
         if (this.role === 'user') {
@@ -165,15 +139,25 @@ UserSchema.pre<IUserDocument>('save', async function (next) {
     }
 });
 
-UserSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
-    return await bcrypt.compare(candidatePassword, this.password);
-};
+UserSchema.methods.comparePassword = async function (enteredPassword: string): Promise<boolean> {
+    try {
+        return await bcrypt.compare(enteredPassword, this.password);
+    } catch (error) {
+        logger.error('Error comparing passwords:', error);
+        throw error;
+    }
+}
 
 // Add validation
 UserSchema.path('email').validate(async function(email: string) {
     const emailCount = await model('User').countDocuments({ email });
     return !emailCount;
 }, 'Email already exists');
+
+// Add custom validation for phone number format
+UserSchema.path('number').validate(function(value: string) {
+    return /^07[0-9]{8}$/.test(value);
+}, 'Phone number must start with 07 and be 10 digits long');
 
 // Add method to get challenge count
 UserSchema.methods.getChallengeCount = function(type: 'completed' | 'ongoing' | 'created'): number {
@@ -188,6 +172,9 @@ UserSchema.methods.getChallengeCount = function(type: 'completed' | 'ongoing' | 
             return 0;
     }
 };
+
+// Add text index for specialty
+UserSchema.index({ specialty: 'text' });
 
 export default model<IUser>('User', UserSchema);
 

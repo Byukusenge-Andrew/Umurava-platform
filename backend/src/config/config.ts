@@ -19,6 +19,21 @@ interface Config {
     maxSize: number;
     allowedTypes: string[];
   };
+  storage: StorageConfig;
+  supabase: {
+    url: string;
+    key: string;
+    bucket: string;
+  };
+}
+
+/**
+ * @interface StorageConfig
+ * @description Storage configuration options interface
+ */
+export interface StorageConfig {
+  baseUrl: string;
+  apiKey: string;
 }
 
 /**
@@ -36,6 +51,15 @@ const config: Config = {
   fileUpload: {
     maxSize: 10 * 1024 * 1024, // 10MB
     allowedTypes: ['image/jpeg', 'image/png', 'image/gif']
+  },
+  storage: {
+    baseUrl: process.env.CLOUD_STORAGE_URL || 'https://www.rakuten-drive.com/cloud/mydrive/Images/',
+    apiKey: process.env.CLOUD_STORAGE_API_KEY || ''
+  },
+  supabase: {
+    url: process.env.SUPABASE_URL || '',
+    key: process.env.SUPABASE_ANON_KEY || '',
+    bucket: process.env.SUPABASE_BUCKET || 'profile-images'
   }
 };
 

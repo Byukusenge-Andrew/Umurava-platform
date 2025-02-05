@@ -1,66 +1,76 @@
-import { Request, Response, NextFunction } from 'express';
-import { Types } from 'mongoose';
+import { Request, Response } from 'express';
 import Image from '../models/Image';
 import asyncHandler from '../middleware/async';
 import ErrorResponse from '../utils/errorResponse';
-import { AuthRequest, IUser } from '../types';
-import { ObjectId } from 'mongodb';
-
-// TODO: For cloud storage integration:
-// 1. Update file paths to use cloud storage URLs
-// 2. Add cloud storage cleanup on delete
-// 3. Update error handling for cloud operations
-// 4. Add proper URL generation for stored files
-// Example cloud configuration:
-// const cloudConfig = {
-//   bucket: process.env.CLOUD_BUCKET,
-//   region: process.env.CLOUD_REGION,
-//   baseUrl: process.env.CLOUD_BASE_URL
-// };
+import CloudStorageService from '../services/CloudStorageService';
+import { IImage } from '../models/Image';
 
 class ImageController {
-    upload = asyncHandler(async (req: AuthRequest, res: Response) => {
+    upload = asyncHandler(async (req: Request, res: Response) => {
         if (!req.file || !req.user) {
             throw new ErrorResponse('Please upload an image file and login', 400);
         }
 
+        // Upload to cloud storage
+        const imageUrl = await CloudStorageService.uploadFile(req.file);
+
+        // Save reference in database
         const image = await Image.create({
-            filename: req.file.filename,
-            path: req.file.path,
+            filename: req.file.originalname,
+            url: imageUrl,
             mimetype: req.file.mimetype,
             size: req.file.size,
-            uploadedBy: req.user._id,
-            metadata: {
-                width: req.body.width,
-                height: req.body.height,
-                format: req.body.format
-            }
+            uploadedBy: req.user._id
         });
 
-        res.status(201).json({ success: true, data: image });
+        res.status(201).json({ 
+            success: true, 
+            data: image 
+        });
     });
 
-    getUserImages = asyncHandler(async (req: AuthRequest, res: Response) => {
-        const images = await Image.find({ 
-            uploadedBy: req.user?._id 
-        }).sort({ uploadDate: -1 });
-        
-        res.status(200).json({ success: true, data: images });
+    getUserImages = asyncHandler(async (req: Request, res: Response) => {
+        const images = await Image.find({ uploadedBy: req.params.userId })
+                                .sort({ uploadDate: -1 });
+        res.status(200).json({ 
+            success: true, 
+            data: images 
+        });
     });
 
-    delete = asyncHandler(async (req: AuthRequest, res: Response) => {
-        const image = await Image.findById(req.params.id);
+    delete = asyncHandler(async (req: Request, res: Response) => {
+        const image = await Image.findById(req.params.id) as IImage | null;
         
         if (!image) {
             throw new ErrorResponse('Image not found', 404);
         }
 
-        if (!req.user || !image.canModify(req.user._id)) {
+        if (!req.user || !image.canModify(req.user.id)) {
             throw new ErrorResponse('Not authorized to delete this image', 403);
         }
 
+        // Delete from cloud storage
+        await CloudStorageService.deleteFile(image.url);
+
+        // Delete from database
         await image.deleteOne();
-        res.status(200).json({ success: true, data: {} });
+        
+        res.status(200).json({ 
+            success: true, 
+            data: {} 
+        });
+    });
+
+    listImages = asyncHandler(async (req: Request, res: Response) => {
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 20;
+
+        const images = await CloudStorageService.listFiles(page, limit);
+        
+        res.status(200).json({
+            success: true,
+            data: images
+        });
     });
 }
 

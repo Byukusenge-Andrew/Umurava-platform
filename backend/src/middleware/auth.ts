@@ -83,25 +83,4 @@ export const authorize = (...roles: string[]) => {
     };
 };
 
-/**
- * @middleware isSuperAdmin
- * @description Check if user is super admin
- * @param {Request} req - Express request object
- * @param {Response} res - Express response object
- * @param {NextFunction} next - Express next function
- * @throws {AuthorizationError} If user is not super admin
- */
-export const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        if (!req.user) {
-            throw new AuthenticationError('User not found');
-        }
 
-        if (!req.user.isSuper()) {
-            throw new AuthorizationError('Only super admins can access this route');
-        }
-        next();
-    } catch (error) {
-        next(error);
-    }
-};

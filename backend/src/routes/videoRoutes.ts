@@ -7,7 +7,8 @@ const router = Router();
 const videoController = new VideoController();
 
 // Public routes
-router.get('/', videoController.getAll);
+router.get('/', videoController.getAllVideos);
+router.get('/search', videoController.searchVideos);
 
 // Admin only routes
 router.use(protect);

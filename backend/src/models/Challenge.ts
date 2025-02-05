@@ -176,13 +176,4 @@ ChallengeSchema.methods.getRemainingTime = function(): number {
     return this.deadline?.getTime() - new Date().getTime();
 };
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     ChallengeStatus:
- *       type: string
- *       enum: [open, ongoing, completed]
- */
-
 export default model<IChallenge>('Challenge', ChallengeSchema);
