@@ -21,6 +21,7 @@ import { AuthRequest } from '../types';
 import { uploadImage } from '../middleware/upload';
 import mongoose from 'mongoose';
 import CloudStorageService from '../services/CloudStorageService';
+import { sign } from 'jsonwebtoken';
 
 
 declare module 'express' {
@@ -462,33 +463,33 @@ export default class UserController extends BaseController<IUser> {
                 }
             }
 
-            // 6. Sanitize and Create User
+            // 6. Create User
             createdUser = await User.create({
                 name: name.trim(),
                 email: email.toLowerCase().trim(),
                 password, // Password will be hashed by mongoose pre-save hook
                 specialty: specialty.trim(),
                 number: number.trim(),
-                isEmailVerified: true,
                 profileImageUrl: fileUrl,
-                role: 'user' // Explicitly set role
+                role: 'user'
             });
 
-            // 7. Remove Sensitive Data from Response
-            const userResponse = {
-                _id: createdUser._id,
-                name: createdUser.name,
-                email: createdUser.email,
-                specialty: createdUser.specialty,
-                profileImageUrl: createdUser.profileImageUrl
-            };
+            // 7. Generate Token and Send Response
+            const token = this.generateToken(createdUser);
 
             res.status(201).json({
                 success: true,
-                message: 'Registration successful. You can now login.',
+                message: 'Registration successful',
                 data: {
-                    user: userResponse,
-                    imageUrl: fileUrl
+                    token,
+                    user: {
+                        _id: createdUser._id,
+                        name: createdUser.name,
+                        email: createdUser.email,
+                        specialty: createdUser.specialty,
+                        profileImageUrl: createdUser.profileImageUrl,
+                        role: createdUser.role
+                    }
                 }
             });
 
@@ -510,7 +511,6 @@ export default class UserController extends BaseController<IUser> {
                     message: error.message
                 });
             } else {
-                // 9. Generic Error Message for Production
                 res.status(500).json({
                     success: false,
                     message: 'Registration failed. Please try again later.'
@@ -639,4 +639,13 @@ export default class UserController extends BaseController<IUser> {
             data: users
         });
     });
+
+    // Add this method inside the UserController class
+    private generateToken(user: IUser): string {
+        return sign(
+            { id: user._id, role: user.role },
+            String(config.jwtSecret),
+            { expiresIn: '24h' } // Use literal string instead
+        );
+    }
 }
