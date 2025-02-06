@@ -7,8 +7,8 @@ import React from 'react'
 function page() {
     return (
         <div>
-            <div className='flex items-center justify-between space-x-10 min-h-screen px-28'>
-                <div className="w-1/2">
+            <div className='flex flex-col md:flex-row items-center justify-between space-x-10 min-h-screen pt-20 pb-14 lg:py-0 px-5 sm:px-14 lg:px-28'>
+                <div className="md:w-1/2">
                     <h2 className="font-bold text-3xl text-primary">
                         Our Story
                     </h2>
@@ -27,17 +27,17 @@ function page() {
                 <Image
                     src="/image-12.png"
                     alt="image-12"
-                    className="object-cover h-[24rem] w-[26rem] rounded-2xl"
+                    className="object-cover h-[24rem] w-[26rem] rounded-2xl mt-10 md:mt-0"
                     height={4000}
                     width={4000}
                 />
             </div>
-            <div className="bg-[#F9FAFB] flex flex-col items-center space-x-4 w-full px-14 py-14">
-                <h2 className="w-6/12 font-bold text-3xl text-center">
+            <div className="bg-[#F9FAFB] flex flex-col items-center space-x-4 w-full px-5 sm:px-14 py-14">
+                <h2 className="md:w-6/12 font-bold text-3xl text-center">
                     Why we are solving this problem
                 </h2>
-                <div className="grid grid-cols-2 grid-rows-[auto_1fr] w-10/12 gap-4 mt-20">
-                    <Card className="bg-primary text-white p-3 col-span-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-[auto_1fr] lg:w-10/12 gap-4 mt-20">
+                    <Card className="bg-primary text-white p-3 md:col-span-2">
                         <CardHeader>
                             <BriefcaseBusiness className="bg-white text-primary w-12 h-12 p-4 rounded-md mb-2" />
                             <CardTitle className="text-xl mt-6">
@@ -82,8 +82,8 @@ function page() {
                     </Card>
                 </div>
             </div>
-            <div className='flex items-center justify-between space-x-10 min-h-screen px-28'>
-                <div className="w-1/2">
+            <div className='flex flex-col md:flex-row items-center justify-between md:space-x-10 min-h-screen p-5 sm:px-14 lg:px-28 py-14'>
+                <div className="md:w-1/2">
                     <h2 className="font-bold text-3xl text-primary">
                         Skills Challenges Program is built on the Umurava Talent Marketplace Platform
                     </h2>
@@ -101,7 +101,7 @@ function page() {
                 <Image
                     src="/image-13.png"
                     alt="image-13"
-                    className="object-cover h-[24rem] w-[26rem] rounded-2xl"
+                    className="object-cover h-[24rem] w-[26rem] rounded-2xl ml-auto mt-10 md:mt-0"
                     height={4000}
                     width={4000}
                 />

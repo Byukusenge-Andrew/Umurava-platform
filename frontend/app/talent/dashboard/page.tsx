@@ -2,7 +2,7 @@ import { MetricCard } from '@/components/Components'
 import { Button } from '@/components/ui/button'
 import challengeData from "@/data/challengeData.json";
 import ChallengeCard from '@/components/ChallengeCard';
-import { Bell, ChevronRight, Eye, FileText } from 'lucide-react'
+import { Bell, ChevronDown, ChevronRight, Eye, FileText } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -18,7 +18,7 @@ function page() {
                     <Eye className='text-white h-5 w-5' /> View Profile
                 </Button>
             </div>
-            <div className='w-full flex justify-between gap-6 items-center'>
+            <div className='w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-center'>
                 <MetricCard title="Completed Challenges" amount={5} />
                 <MetricCard title="Open Challenges" amount={200} />
                 <MetricCard title="Ongoing Challenges" amount={200} />
@@ -26,11 +26,11 @@ function page() {
             <div>
                 <div className='w-full flex justify-between items-center text-sm mb-4'>
                     <p className='font-bold'>Recent Challenges</p>
-                    <Link href="/talent-challenges" className='flex items-center text-primary'>
+                    <Link href="/talent/challenges" className='flex items-center text-primary'>
                         See all <ChevronRight className='h-6 w-6' />
                     </Link>
                 </div>
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {challengeData.slice(0, 3).map((challenge) => (
                         <ChallengeCard key={challenge.id} challenge={challenge} />
                     ))}

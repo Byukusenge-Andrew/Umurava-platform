@@ -1,13 +1,15 @@
 "use client"; // Needed if using Next.js App Router (app directory)
 
-import { FileText, MoveLeft } from "lucide-react";
+import { ChevronDown, FileText, MoveLeft, MoveUp } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setRole, type AuthState } from "@/lib/features/authentication/authSlice";
 import { formatTitle } from "@/lib/utils";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import Image from "next/image";
 
 
 export const ChallengeButton = ({ id, title }: { id: number; title: string }) => {
@@ -24,7 +26,7 @@ export const ChallengeButton = ({ id, title }: { id: number; title: string }) =>
   }, [pathname, dispatch]);
 
   const formattedTitle = formatTitle(title);
-  const href = role === "admin" ? `/admin/challenges/${id}/${formattedTitle}` : `/talent-challenges/${id}/${formattedTitle}`;
+  const href = role === "admin" ? `/admin/challenges/${id}/${formattedTitle}` : `/talent/challenges/${id}/${formattedTitle}`;
 
   return (
     <Button className="bg-primary text-white text-xs py-0">
@@ -78,6 +80,68 @@ export const MetricCard = ({ title, amount }: { title: string; amount: number })
   );
 };
 
+// Modify AdminMetricCard to accept the icon component directly
+export const AdminMetricCard = ({
+  title,
+  amount,
+  rate,
+  defaultTime,
+  className,
+  icon: Icon, // The icon is now a component, not a string
+}: {
+  title: string;
+  amount: number;
+  rate: number;
+  defaultTime: string;
+  className?: string;
+  icon: React.ElementType; // This will accept a React component
+}) => {
+  const [selectedTime, setSelectedTime] = useState(defaultTime);
+
+  const handleSelect = (item: string) => {
+    setSelectedTime(item);
+  };
+
+  return (
+    <div className={`bg-white w-full border border-gray-200 rounded-md pt-2 pb-6 px-4 ${className}`}>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex text-xs items-center ml-auto">
+          {selectedTime}
+          <ChevronDown className="ml-2 h-4 w-4" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Time</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => handleSelect("This Week")}>This Week</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleSelect("Last 7 Days")}>Last 7 Days</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleSelect("Last 30 Days")}>Last 30 Days</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleSelect("Last 6 Months")}>Last 6 Months</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleSelect("Last 12 Months")}>Last 12 Months</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <div className="flex items-center text-xs gap-4 mt-2">
+        {/* Right Section - Icon */}
+        <div className="bg-blue-100 flex justify-center items-center rounded-full w-fit p-2">
+          <Icon className="text-primary h-5 w-5" /> {/* Render the passed icon */}
+        </div>
+
+        {/* Left Section */}
+        <div className="flex flex-col gap-1.5">
+          <p className="text-gray-600">{title}</p>
+          <div className="flex items-center gap-2">
+            <p className="font-bold">{amount}</p>
+            <p className="bg-blue-100 flex items-center text-[0.6rem] text-blue-600 px-1 rounded-full">
+              <MoveUp className="h-2.5 w-2.5" />
+              {rate}%
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 export const FilterTab = ({ tab, label, count }: { tab: string; label: string; count: number }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -88,7 +152,7 @@ export const FilterTab = ({ tab, label, count }: { tab: string; label: string; c
   const handleClick = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("tab", tab);
-    router.push(`/talent-challenges?${newParams.toString()}`);
+    router.push(`/talent/challenges?${newParams.toString()}`);
   };
 
   return (
@@ -101,5 +165,20 @@ export const FilterTab = ({ tab, label, count }: { tab: string; label: string; c
       <p>{label}</p>
       <p className={`${isActive ? "bg-primary text-white" : "bg-gray-200"} rounded-full px-2`}>{count}</p>
     </button>
+  );
+};
+
+export const ParticipantListItem = ({ name, speciality, image }: { name: string; speciality: string; image: string }) => {
+  return (
+    <div className="flex items-center gap-2 p-4 border-y border-gray-200">
+      <div className="relative">
+        <Image className="bg-gray-800 w-9 h-9 rounded-full object-cover" src={image} alt="profile" height={100} width={100} />
+        <span className="bottom-0 left-6 absolute w-2.5 h-2.5 bg-[#04802E] rounded-full"></span>
+      </div>
+      <div className="text-xs">
+        <p className='font-bold'>{name}</p>
+        <p className='text-gray-600'>{speciality}</p>
+      </div>
+    </div>
   );
 };

@@ -19,13 +19,13 @@ const SideNav = () => {
                     height={50}
                     priority
                 />
-                <NavItem href="/dashboard">
+                <NavItem href="/talent/dashboard">
                     <House className="mr-2 h-5 w-5" /> Dashboard
                 </NavItem>
-                <NavItem href="/talent-challenges">
+                <NavItem href="/talent/challenges">
                     <FileText className="mr-2 h-5 w-5" /> Challenges and Hackathons
                 </NavItem>
-                <NavItem href="/community">
+                <NavItem href="/talent/community">
                     <User className="mr-2 h-5 w-5" /> Community
                 </NavItem>
             </div>

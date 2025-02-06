@@ -9,32 +9,32 @@ import React from 'react'
 function page() {
     return (
         <div>
-            <div className='flex items-center justify-between space-x-10 min-h-screen px-14'>
-                <div className="w-1/2">
-                    <h2 className="font-bold text-3xl text-primary">
+            <div className='flex flex-col lg:flex-row lg:items-center justify-between lg:space-x-10 min-h-screen pt-20 pb-14 lg:py-0 px-5 sm:px-14'>
+                <div className="lg:w-1/2">
+                    <h2 className="font-bold text-2xl lg:text-3xl text-primary">
                         Accelerate Your Students and Traineess Employability and
                         Career Growth through Project-based Learning Solution
                     </h2>
-                    <p className="mt-4 text-gray-600">
+                    <p className="mt-4 text-sm md:text-base text-gray-600">
                         We partner with Universities, Schools, and Trainining Institutions to
                         build the work experience of their students and trainees through project
                         based learning challenges and hackathons
                     </p>
-                    <Button className="bg-primary text-xs text-white px-10 mt-10">Partner with us</Button>
+                    <Button className="bg-primary text-xs text-white px-10 mt-4 lg:mt-10">Partner with us</Button>
                 </div>
                 <Image
                     src="/image-10.png"
                     alt="image-1"
-                    className="object-cover h-72 w-[30rem] rounded-2xl"
+                    className="object-cover lg:h-72 lg:w-[30rem] rounded-2xl mt-10 lg:mt-0 "
                     height={1000}
                     width={1000}
                 />
             </div>
-            <div className="bg-[#F9FAFB] flex flex-col items-center w-full px-14 py-14">
-                <h2 className="w-6/12 font-bold text-2xl text-center">
+            <div className="bg-[#F9FAFB] flex flex-col items-center w-full px-5 sm:px-14 py-14">
+                <h2 className="font-bold text-2xl text-center">
                     Key Offerings & Benefits:
                 </h2>
-                <div className="grid grid-cols-3 gap-4 mt-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20">
                     <Card className="bg-primary text-white p-3">
                         <CardHeader>
                             <BriefcaseBusiness className="bg-white text-primary w-12 h-12 p-4 rounded-md mb-2" />
@@ -81,7 +81,7 @@ function page() {
                             </CardDescription>
                         </CardContent>
                     </Card>
-                    <Card className="bg-primary text-white p-3 col-span-2">
+                    <Card className="bg-primary text-white p-3 lg:col-span-2">
                         <CardHeader>
                             <BriefcaseBusiness className="bg-white text-primary w-12 h-12 p-4 rounded-md mb-2" />
                             <CardTitle className="text-xl mt-6">
@@ -111,31 +111,33 @@ function page() {
                     </Card>
                 </div>
             </div>
-            <div className="flex flex-col items-center gap-20 w-full px-14 py-14">
-                <h2 className="w-5/12 font-bold text-2xl text-center">
+            <div className="flex flex-col items-center gap-20 w-full px-5 sm:px-14 py-14">
+                <h2 className="md:7/12 lg:w-5/12 font-bold text-2xl text-center">
                     Join a few Educational Institutions using Skills Challenges by Umurava
                 </h2>
-                <div className='w-full grid grid-cols-6 gap-y-8 justify-between'>
-                    <Image src="/logos/logo-3.png" alt="logo-3" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-4.png" alt="logo-4" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-5.png" alt="logo-5" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-6.png" alt="logo-6" className="object-contain h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-7.png" alt="logo-7" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-8.png" alt="logo-8" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-9.png" alt="logo-9" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-10.png" alt="logo-10" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-11.png" alt="logo-11" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-12.png" alt="logo-12" className="object-contain h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-13.png" alt="logo-13" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-14.png" alt="logo-14" className="h-12 w-32" height={1000} width={1000} />
-                    <Image src="/logos/logo-15.png" alt="logo-15" className="col-span-6 mx-auto h-12 w-32" height={1000} width={1000} />
+                <div className='w-full flex flex-col items-center'>
+                    <div className='w-full lg:w-9/12 flex flex-wrap gap-y-8 justify-evenly'>
+                        <Image src="/logos/logo-3.png" alt="logo-3" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-4.png" alt="logo-4" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-5.png" alt="logo-5" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-6.png" alt="logo-6" className="object-contain h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-7.png" alt="logo-7" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-8.png" alt="logo-8" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-9.png" alt="logo-9" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-10.png" alt="logo-10" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-11.png" alt="logo-11" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-12.png" alt="logo-12" className="object-contain h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-13.png" alt="logo-13" className="h-12 w-32" height={1000} width={1000} />
+                        <Image src="/logos/logo-14.png" alt="logo-14" className="h-12 w-32" height={1000} width={1000} />
+                    </div>
+                    <Image src="/logos/logo-15.png" alt="logo-15" className="col-span-6 mx-auto mt-8 h-12 w-32" height={1000} width={1000} />
                 </div>
             </div>
             <div className="flex flex-col items-center gap-20 w-full px-14 py-14">
-                <h2 className="w-6/12 font-bold text-2xl text-center">
+                <h2 className="md:w-6/12 font-bold text-2xl text-center">
                     How Skills Challenges Program can Be Integrated into your Learning Institution.
                 </h2>
-                <div className='w-10/12 flex justify-between items-center'>
+                <div className='w-10/12 flex flex-col lg:flex-row justify-between items-center'>
                     <div className='space-y-4'>
                         <StepIndicator number={1} text="As Career Development and Job Readiness Program" />
                         <StepIndicator number={2} text="As Skills Assessments Method after a course or a term" />
@@ -146,7 +148,7 @@ function page() {
                     <Image
                         src="/image-11.png"
                         alt="image-11"
-                        className="object-cover "
+                        className="object-cover mt-10 lg:mt-0"
                         height={400}
                         width={400}
                     />
@@ -154,7 +156,7 @@ function page() {
             </div>
             <div className="flex flex-col items-center gap-20 w-full px-14 py-14">
                 <div className='bg-primary flex flex-col justify-center items-center gap-6 w-full rounded-2xl p-20'>
-                    <h2 className="w-4/12 font-bold text-white text-2xl text-center">
+                    <h2 className="lg:w-8/12 md:w-4/12 font-bold text-white text-2xl text-center">
                         Ready to transform your learning institution?
                     </h2>
                     <Button className="bg-white text-xs font-bold text-primary px-12" variant="outline" asChild>
