@@ -49,9 +49,9 @@ export function CarouselComponent() {
                 <CarouselContent>
                     {Array.from({ length: 5 }).map((_, index) => (
                         <CarouselItem key={index}>
-                            <div className="flex items-center gap-10">
-                                <div className="">
-                                    <Card className="shadow-none border-none w-3/5">
+                            <div className="flex flex-col md:flex-row items-center justify-between">
+                                <div className="md:w-2/5">
+                                    <Card className="shadow-none border-none">
                                         <CardHeader>
                                             <Image
                                                 src="/image-3.png"
@@ -78,7 +78,7 @@ export function CarouselComponent() {
                                 <Image
                                     src="/image-2.png"
                                     alt="image-1"
-                                    className="object-cover"
+                                    className="object-cover h-60 w-80"
                                     height={300}
                                     width={400}
                                 />

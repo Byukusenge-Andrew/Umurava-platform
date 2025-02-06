@@ -32,7 +32,7 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between py-6 border-b border-gray-600">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-auto py-6 border-b border-gray-600">
                 <div className="flex flex-col gap-4">
                     <h2 className="text-white font-semibold">Our Address</h2>
                     <div className="flex items-center gap-2">
@@ -43,7 +43,7 @@ function Footer() {
                         <MapPin className="text-white w-3 h-3" />
                         <span className="text-xs font-thin text-gray-300">89 KG 14 Ave, Kigali</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-end gap-2">
                         <Phone className="text-white w-3 h-3" />
                         <span className="text-xs font-thin text-gray-300">+250 700 000</span>
                     </div>
@@ -64,8 +64,8 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between items-center pt-4 text-gray-300 text-xs font-thin">
-                <p>Copyright © All Rights Reserved SawaPay 2024.</p>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 pt-4 text-gray-300 text-xs font-thin">
+                <p>Copyright © All Rights Reserved SawaPay {new Date().getFullYear()}.</p>
                 <p>Privacy Policy  | Terms and Conditions</p>
             </div>
         </div>

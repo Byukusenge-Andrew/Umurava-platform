@@ -40,23 +40,23 @@ export function TestimonialCarouselComponent() {
     )
 
     return (
-        <div>
+        <div className="w-full">
             <Carousel
                 setApi={setApi}
                 plugins={[plugin.current]}
-                className="w-full rounded-md mx-auto"
+                className=" rounded-md mx-auto"
                 onMouseEnter={() => plugin.current.stop()}
                 onMouseLeave={() => plugin.current.play()}
             >
                 <CarouselContent>
                     {Array.from({ length: 5 }).map((_, index) => (
-                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                            <div className="">
+                        <CarouselItem key={index} className="w-full md:basis-1/2 lg:basis-1/3">
+                            <div className="w-fit">
                                 <Card>
                                     <CardHeader className="">
                                         <Video
                                             src={UmuravaVideo}
-                                            className="bg-red-50 rounded-lg overflow-hidden"
+                                            className="rounded-lg overflow-hidden"
                                         />
                                     </CardHeader>
                                     <CardContent className="flex space-x-2">

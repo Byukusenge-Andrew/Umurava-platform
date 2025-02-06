@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import StoreProvider from "@/lib/StoreProvider";
 
 export const metadata: Metadata = {
   title: "Umurava",
@@ -12,10 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className="antialiased">
+          {children}
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

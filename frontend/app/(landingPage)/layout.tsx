@@ -22,7 +22,6 @@ export default function RootLayout({
                     <NavItem href='/challenges'>Challenge & Hackathons</NavItem>
                     <NavItem href='/institutions'>For Eductional Institutions</NavItem>
                     <NavItem href='/about-us'>About Us</NavItem>
-                    <NavItem href=''>Contact Us</NavItem>
                 </Nav>
                 {children}
                 <Footer />
