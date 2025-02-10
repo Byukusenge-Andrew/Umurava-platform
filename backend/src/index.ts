@@ -18,7 +18,7 @@ import path from 'path';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; 
 
 // CORS configuration
 const corsOptions = {
@@ -178,8 +178,8 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 // Start server
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, () => {
-        logger.info(`Server running at http://localhost:${port}`);
+    app.listen(PORT, () => {
+        logger.info(`Server running at http://localhost:${PORT}`);
     });
 }
 
