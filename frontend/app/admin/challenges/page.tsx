@@ -1,16 +1,37 @@
+'use client'
 import { FilterTab } from '@/components/Components'
 import challengeData from "@/data/challengeData.json";
 import ChallengeCard from '@/components/ChallengeCard';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { getChallenges } from '@/app/actions/challenges';
+import { getByCreatorId, getChallenges } from '@/app/actions/challenges';
 import { Challenge } from '@/app/types/challenge';
 
-async function page() {
+function page() {
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
 
-    const challenges: Challenge[] = await getChallenges(6);
+  useEffect(() => {
+    const fetchChallenge = async () => {
+      try {
+        const challengeData = await getByCreatorId(6, localStorage.getItem('_id'), localStorage.getItem('authToken'));
+        console.log("Challenge data:", challengeData);
+
+        if (challengeData && Object.keys(challengeData).length === 0) {
+          // If the fetched data is an empty object, treat it as a 404
+          setChallenges([]);
+        } else {
+          setChallenges(challengeData);
+        }
+      } catch (error) {
+        console.error("Error fetching challenge:", error);
+        setChallenges([]); // In case of an error, treat it as a 404
+      }
+    };
+
+    fetchChallenge();
+  }, []);
 
     return (
         <div className='flex flex-col gap-10 py-6 px-8'>
@@ -38,7 +59,7 @@ async function page() {
                     ))}
                 </div>
                 ) : (
-                    <p className="mt-1 text-center text-sm text-gray-600">
+                    <p className="mt-10 text-center text-sm text-gray-600">
                         You have not created any challenges yet!
                     </p>
                 )}

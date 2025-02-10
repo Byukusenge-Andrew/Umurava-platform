@@ -27,9 +27,9 @@ export default async function Home() {
                 </div>
                 <div className="md:w-1/2 flex md:items-center md:justify-end mt-8 md:mt-0 gap-2">
                     <Image
-                        src="/image-1.png"
+                        src="/image.png"
                         alt="image-1"
-                        className="object-cover rounded-3xl h-72 w-40 sm:h-80 sm:w-52 lg:h-96 lg:w-60 overflow-hidden"
+                        className=" rounded-3xl h-72 w-52 sm:h-80 sm:w-60 lg:h-96 lg:w-72 overflow-hidden"
                         height={400}
                         width={240}
                     />
@@ -161,11 +161,17 @@ export default async function Home() {
 
                 {/* Challenge Card */}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {challenges.slice(0, 3).map((challenge) => (
-                        <ChallengeCard key={challenge._id} challenge={challenge} />
-                    ))}
-                </div>
+                {challenges.length !== 0 ? (
+                    <div className="grid grid-cols-3 gap-6 mt-4">
+                        {challenges.slice(0, 3).map((challenge) => (
+                            <ChallengeCard key={challenge._id} challenge={challenge} />
+                        ))}
+                    </div>
+                ) : (
+                    <p className="mt-1 text-center text-sm text-gray-600">
+                        No challenges were found!
+                    </p>
+                )}
 
                 <Button className="border-primary text-xs text-primary px-12" variant="outline" asChild>
                     <Link href="/#">View More</Link>

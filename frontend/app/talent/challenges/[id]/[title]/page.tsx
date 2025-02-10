@@ -1,3 +1,4 @@
+'use client'
 import { GoBackButton } from '@/components/Components'
 import { Button } from '@/components/ui/button'
 import { BriefcaseBusiness, CalendarDays, DollarSign, Mail } from 'lucide-react'
@@ -6,8 +7,14 @@ import React from 'react'
 import Link from 'next/link';
 import { getChallenge } from '@/app/actions/challenges';
 import { Challenge } from '@/app/types/challenge';
+import { useParams } from 'next/navigation'
 
-async function Page({ params: { id }}: { params: { id: number } }) {
+async function Page() {
+  // Retrieve and normalize the id parameter
+  const { id: paramId } = useParams();
+  const id = Array.isArray(paramId) ? paramId[0] : paramId;
+
+  if (!id) return;
   const challenge: Challenge = await getChallenge(id, null); // Find the challenge data by ID
 
   if (!challenge) {

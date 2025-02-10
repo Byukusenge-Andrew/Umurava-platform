@@ -8,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux"
-import { setId } from "@/lib/features/authentication/authSlice"
 
 export default function LoginForm() {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL

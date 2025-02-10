@@ -59,8 +59,13 @@ export default abstract class BaseController<T extends Document> {
 
   getByCreatorId = async (req: Request, res: Response): Promise<void> => {
     console.log("Request params:", req.params);
+    const limit = req.params.limit ? parseInt(req.params.limit, 10) : 5;
+
+    // Ensure limit is a valid number and not NaN
+    const finalLimit = isNaN(limit) ? 5 : limit;
+
     try {
-      const item = await this.model.findById(req.params.creator_id);
+      const item = await this.model.find({ creator_id: req.params.creator_id }).limit(finalLimit);
       if (!item) {
         res.status(404).json({ message: "Item not found" });
         return;
