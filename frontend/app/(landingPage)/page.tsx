@@ -4,12 +4,16 @@ import Image from "next/image";
 import { BriefcaseBusiness, FileText, Medal, TrendingUp } from "lucide-react";
 import { CarouselComponent } from "./_components/Carousel";
 import { Badge } from "@/components/ui/badge";
-import challengeData from "@/data/challengeData.json";
 import ChallengeCard from "../../components/ChallengeCard";
 import Link from "next/link";
 import { TestimonialCarouselComponent } from "./_components/TestimonialCarousel";
+import { getChallenges } from "../actions/challenges";
+import { Challenge } from "../types/challenge";
 
-export default function Home() {
+export default async function Home() {
+
+    const challenges: Challenge[] = await getChallenges(3);
+
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-10 min-h-screen pt-20 pb-14 md:py-0 px-5 sm:px-14">
@@ -158,8 +162,8 @@ export default function Home() {
                 {/* Challenge Card */}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {challengeData.slice(0, 3).map((challenge) => (
-                        <ChallengeCard key={challenge.id} challenge={challenge} />
+                    {challenges.slice(0, 3).map((challenge) => (
+                        <ChallengeCard key={challenge._id} challenge={challenge} />
                     ))}
                 </div>
 

@@ -3,15 +3,26 @@ import logger from '../utils/logger';
 import { createClient } from '@supabase/supabase-js';
 import config from '../config/config';
 import dotenv from 'dotenv';
+import sharp from 'sharp';
 
 // Load environment variables
 dotenv.config();
+
+const convertToJpg = async (inputBuffer: Buffer): Promise<Buffer> => {
+    return sharp(inputBuffer)
+        .resize({ width: 1024 }) // Resize width to 1024px, adjust if needed
+        .jpeg({ quality: 80 }) // Convert to JPEG with 80% quality
+        .toBuffer();
+};
 
 class CloudStorageService {
     private static supabase = (() => {
         const supabaseUrl = process.env.SUPABASE_URL;
         // Use service role key instead of anon key for admin access
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+        console.log('SUPABASE_URL:', supabaseUrl);
+        console.log('SUPABASE_SERVICE_ROLE_KEY:', supabaseKey);
 
         if (!supabaseUrl || !supabaseKey) {
             logger.error('Missing Supabase credentials:', {
@@ -45,22 +56,24 @@ class CloudStorageService {
                 throw new Error('File size exceeds 5MB limit');
             }
 
+            const optimizedBuffer = await convertToJpg(file.buffer);
+
             const timestamp = Date.now();
             const safeName = encodeURIComponent(file.originalname.replace(/\s+/g, '_'));
             const uniqueFilename = `${timestamp}-${safeName}`;
 
             logger.info('Attempting to upload file:', {
                 filename: uniqueFilename,
-                size: file.size,
-                type: file.mimetype,
+                originalSize: file.size,
+                optimizedSize: optimizedBuffer.length,
                 bucket: process.env.SUPABASE_BUCKET
             });
 
             // Upload file to Supabase Storage
             const { data, error } = await this.supabase.storage
                 .from(process.env.SUPABASE_BUCKET || 'profile_image')
-                .upload(`public/${uniqueFilename}`, file.buffer, {
-                    contentType: file.mimetype,
+                .upload(`public/${uniqueFilename}`, optimizedBuffer, {
+                    contentType: 'image/jpeg',
                     cacheControl: '3600',
                     upsert: false
                 });

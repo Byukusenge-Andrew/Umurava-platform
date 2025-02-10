@@ -1,73 +1,88 @@
-"use client"
+"use client";
 
-import { useState, useRef, type KeyboardEvent, type FocusEvent } from "react"
-import { Textarea } from "@/components/ui/textarea"
+import { useRef, type KeyboardEvent, type FocusEvent } from "react";
+import { Textarea } from "@/components/ui/textarea";
 
-export function BulletPointTextarea() {
-  const [content, setContent] = useState("")
-  const [isFocused, setIsFocused] = useState(false)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+export function BulletPointTextarea({
+  value,
+  onChange,
+}: {
+  value: string[];
+  onChange: (newValue: string[]) => void;
+}) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault()
-      const cursorPosition = e.currentTarget.selectionStart
-      const currentContent = e.currentTarget.value
+      e.preventDefault();
+      const cursorPosition = e.currentTarget.selectionStart;
+      const currentContent = e.currentTarget.value;
 
-      const beforeCursor = currentContent.substring(0, cursorPosition)
-      const afterCursor = currentContent.substring(cursorPosition)
+      const beforeCursor = currentContent.substring(0, cursorPosition);
+      const afterCursor = currentContent.substring(cursorPosition);
 
-      const currentLineStart = beforeCursor.lastIndexOf("\n") + 1
-      const currentLine = beforeCursor.substring(currentLineStart)
-      const hasBullet = currentLine.trimStart().startsWith("• ")
+      const currentLineStart = beforeCursor.lastIndexOf("\n") + 1;
+      const currentLine = beforeCursor.substring(currentLineStart);
+      const hasBullet = currentLine.trimStart().startsWith("• ");
 
-      let newContent
+      let newContent;
       if (hasBullet && currentLine.trim() === "• ") {
-        newContent = beforeCursor.substring(0, currentLineStart) + afterCursor
+        newContent = beforeCursor.substring(0, currentLineStart) + afterCursor;
       } else {
-        newContent = beforeCursor + "\n• " + afterCursor
+        newContent = beforeCursor + "\n• " + afterCursor;
       }
 
-      setContent(newContent)
+      // Extract bullet points
+      const bulletPoints = newContent
+        .split("\n")
+        .filter((line) => line.trim().startsWith("•"))
+        .map((line) => line.trim().slice(2).trim());
+
+      onChange(bulletPoints); // Update parent state
 
       setTimeout(() => {
         if (textareaRef.current) {
-          const newPosition = cursorPosition + 3
-          textareaRef.current.setSelectionRange(newPosition, newPosition)
+          const newPosition = cursorPosition + 3;
+          textareaRef.current.setSelectionRange(newPosition, newPosition);
         }
-      }, 0)
+      }, 0);
     }
-  }
+  };
 
   const handleFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
-    setIsFocused(true)
-    if (!content.trim()) {
-      setContent("• ")
+    if (value.length === 0) {
+      onChange([""]);
       setTimeout(() => {
         if (textareaRef.current) {
-          textareaRef.current.setSelectionRange(2, 2)
+          textareaRef.current.setSelectionRange(2, 2);
         }
-      }, 0)
+      }, 0);
     }
-  }
+  };
 
   const handleBlur = () => {
-    setIsFocused(false)
-    if (content.trim() === "•") {
-      setContent("")
+    if (value.length === 1 && value[0] === "") {
+      onChange([]);
     }
-  }
+  };
 
   return (
     <Textarea
       ref={textareaRef}
-      value={content}
-      onChange={(e) => setContent(e.target.value)}
+      value={value.map((item) => `• ${item}`).join("\n")}
+      onChange={(e) => {
+        const updatedBullets = e.target.value
+          .split("\n")
+          .filter((line) => line.trim().startsWith("•"))
+          .map((line) => line.trim().slice(2).trim());
+
+        onChange(updatedBullets);
+      }}
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      placeholder={!isFocused ? "Enter text here..." : ""}
+      placeholder="Enter text here..."
       className="min-h-[200px]"
     />
-  )
+  );
 }

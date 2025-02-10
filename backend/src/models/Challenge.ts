@@ -11,69 +11,83 @@ import logger from "../utils/logger";
  * @const ChallengeSchema
  * @description Mongoose schema definition for Challenge
  */
-const ChallengeSchema = new Schema<IChallenge>({
-    Title: { 
+const ChallengeSchema = new Schema({
+    title: { 
         type: String, 
         required: [true, 'Title is required'],
         trim: true,
         maxlength: [100, 'Title cannot be more than 100 characters']
     },
-    Deadline: {
-        type: Date,
-        required: [true, 'Deadline is required'],
-        validate: {
-            validator: function(date: Date) {
-                return date > new Date();
-            },
-            message: 'Deadline must be a future date'
-        }
+    duration: {
+        type: String,
+        required: [true, 'Duration is required']
     },
-    contact_email: {
+    deadline: {
+        type: Date,
+        required: [true, 'Deadline is required']
+    },
+    imageUrl: {
+        type: String,
+        required: true
+    },
+    skills: {
+        type: [String],
+        required: true
+    },
+    seniority: {
+        type: String,
+        required: true,
+        enum: ["Beginner", "Intermediate", "Advanced"]
+    },
+    description: {
+        type: String,
+        required: [true, 'Challenge description is required'],
+        // minlength: [50, 'Description must be at least 50 characters']
+    },
+    contactEmail: {
         type: String,
         required: [true, 'Contact email is required'],
         match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
     },
-    Project_Discription: {
+    category: {
         type: String,
-        required: [true, 'Project description is required'],
-        minlength: [50, 'Project description must be at least 50 characters']
+        required: true
     },
-    Brief: {
-        type: String,
-        required: [true, 'Brief is required'],
-        maxlength: [250, 'Brief cannot be more than 500 characters']
+    prize: {
+        type: String, // Keeping it as a string since the range format (e.g., "$150-$400") doesn't fit well as a number
+        required: true
     },
-    Money_Prize: {
-        type: Number,
-        required: [true, 'Prize amount required'],
-        min: [0, 'Prize amount cannot be negative']
+    deliverables: {
+        type: [String],
+        required: true
     },
-    Description: {
-        title: { 
-            type: String, 
-            required: true 
-        },
-        description: { 
-            type: String, 
-            required: true ,
-            maxlength: [500, 'Description cannot be more than 1000 characters']
-        }
+    requirements: {
+        type: [String],
+        required: true
     },
-    participants: {
-        type: Number,
-        default: 0,
-        min: [0, 'Participants cannot be negative']
+    design: {
+        type: [String],
+        required: true
+    },
+    note: {
+        type: [String],
+        default: []
     },
     creator_id: {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         required: [true, 'Creator ID is required'],
         ref: 'User'
     },
     status: {
         type: String,
-        enum: Object.values(ChallengeStatus),
-        default: ChallengeStatus.OPEN,
+        enum: ["OPEN", "CLOSED", "IN_PROGRESS"],
+        default: "OPEN",
         required: true
+    },
+    participants: {
+        type: Number,
+        default: 0,
+        min: [0, 'Participants cannot be negative']
     }
 }, {
     timestamps: true // This automatically adds createdAt and updatedAt

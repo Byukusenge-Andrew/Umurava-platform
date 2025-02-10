@@ -1,9 +1,13 @@
 import { FilterTab } from '@/components/Components'
-import challengeData from "@/data/challengeData.json";
 import ChallengeCard from '@/components/ChallengeCard';
 import React from 'react'
+import { Challenge } from '@/app/types/challenge';
+import { getChallenges } from '@/app/actions/challenges';
 
-function page() {
+async function page() {
+
+    const challenges: Challenge[] = await getChallenges(6);
+
     return (
         <div className='flex flex-col gap-10 py-6 px-8'>
             <div>
@@ -18,8 +22,8 @@ function page() {
                     <FilterTab tab="ongoing" label="Ongoing Challenges" count={10} />
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                    {challengeData.slice(0, 6).map((challenge) => (
-                        <ChallengeCard key={challenge.id} challenge={challenge} />
+                    {challenges.slice(0, 6).map((challenge) => (
+                        <ChallengeCard key={challenge._id} challenge={challenge} />
                     ))}
                 </div>
             </div>
