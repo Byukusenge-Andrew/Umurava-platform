@@ -16,12 +16,17 @@ async function page() {
                 <GoBackButton />
                 <Link href="/challenges" className='text-primary '>/ Challenges & Hackathons</Link>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between gap-6 mt-10">
-                {challenges.slice(0, 12).map((challenge) => (
-                    <ChallengeCard key={challenge._id} challenge={challenge} />
-                ))}
-            </div>
+            {challenges.length !== 0 ? (
+                <div className="grid grid-cols-3 gap-6 mt-4">
+                    {challenges.slice(0, 12).map((challenge) => (
+                        <ChallengeCard key={challenge._id} challenge={challenge} />
+                    ))}
+                </div>
+            ) : (
+                <p className="text-center py-40 text-sm text-gray-600">
+                    No challenges were found!
+                </p>
+            )}
         </div>
     )
 }

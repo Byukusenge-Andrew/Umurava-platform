@@ -186,6 +186,26 @@ ChallengeSchema.methods.updateStatus = async function(status: ChallengeStatus): 
     }
 };
 
+ChallengeSchema.post('find', async function (docs: IChallenge[]) {
+    docs.forEach((challenge) => {
+        if (challenge.deadline && new Date(challenge.deadline) < new Date()) {
+            challenge.status = ChallengeStatus.COMPLETED;
+        } else if (new Date(challenge.deadline) > new Date() && challenge.status !== ChallengeStatus.COMPLETED) {
+            challenge.status = ChallengeStatus.OPEN;
+        }
+    });
+});
+
+ChallengeSchema.post('findOne', async function (doc) {
+    if (doc) {
+        if (doc.deadline && new Date(doc.deadline) < new Date()) {
+            doc.status = ChallengeStatus.COMPLETED;
+        } else if (new Date(doc.deadline) > new Date() && doc.status !== ChallengeStatus.COMPLETED) {
+            doc.status = ChallengeStatus.OPEN;
+        }
+    }
+});
+
 ChallengeSchema.methods.getRemainingTime = function(): number {
     return this.deadline?.getTime() - new Date().getTime();
 };

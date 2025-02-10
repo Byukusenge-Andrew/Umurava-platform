@@ -11,29 +11,29 @@ export default class UserService extends BaseService<IUser> {
         super(User as Model<IUser>);
     }
 
-    async login(email: string, password: string) {
-        const user = await User.findOne({ email }).select('+password');
+    // async login(email: string, password: string) {
+    //     const user = await User.findOne({ email }).select('+password');
         
-        if (!user || !(await user.comparedPassword(password))) {
-            throw new AuthenticationError('Invalid credentials');
-        }
+    //     if (!user || !(await user.comparePassword(password))) {
+    //         throw new AuthenticationError('Invalid credentials');
+    //     }
 
-        const token = jwt.sign(
-            { id: user._id },
-            config.jwtSecret,
-            { expiresIn: config.jwtExpiresIn }
-        );
+    //     const token = jwt.sign(
+    //         { id: user._id },
+    //         config.jwtSecret,
+    //         { expiresIn: config.jwtExpiresIn }
+    //     );
 
-        return {
-            token,
-            user: {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        };
-    }
+    //     return {
+    //         token,
+    //         user: {
+    //             _id: user._id,
+    //             name: user.name,
+    //             email: user.email,
+    //             role: user.role
+    //         }
+    //     };
+    // }
 
     async uploadProfilePicture(userId: string, file: File) {
         const user = await this.findById(userId);

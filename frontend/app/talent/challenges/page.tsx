@@ -21,11 +21,17 @@ async function page() {
                     <FilterTab tab="open" label="Open Challenges" count={10} />
                     <FilterTab tab="ongoing" label="Ongoing Challenges" count={10} />
                 </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                { challenges.length !==0 ? (
+                <div className="grid grid-cols-3 gap-6 mt-4">
                     {challenges.slice(0, 6).map((challenge) => (
                         <ChallengeCard key={challenge._id} challenge={challenge} />
                     ))}
                 </div>
+                ) : (
+                    <p className="mt-10 text-center text-sm text-gray-600">
+                        No challenges were found!
+                    </p>
+                )}
             </div>
         </div>
     )

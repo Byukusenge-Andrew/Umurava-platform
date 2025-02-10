@@ -142,7 +142,7 @@ export default function SignupForm() {
       setPhotoPreview(URL.createObjectURL(file));
     }
   };
-  
+
   const validateFirstStep = () => {
     let isValid = true
     const newErrors = { ...errors }
@@ -221,9 +221,9 @@ export default function SignupForm() {
     e.preventDefault();
     setError(null);
     if (!validateSecondStep()) return;
-  
+
     setIsLoading(true);
-    
+
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("email", formData.email);
@@ -235,21 +235,21 @@ export default function SignupForm() {
         console.log("profileImage", formData.profileImage)
         formDataToSend.append("profileImage", formData.profileImage);
       }
-  
+
       const response = await fetch(`${BASE_URL}/api/users/register`, {
         method: "POST",
         body: formDataToSend,
       });
-  
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
       }
-  
+
       localStorage.removeItem(STORAGE_KEY);
       router.push("/login"); // Redirect to login page
-  
+
     } catch (error) {
       const err = error as Error;
       console.error("Signup error:", error);
@@ -258,7 +258,7 @@ export default function SignupForm() {
       setIsLoading(false);
     }
   };
-  
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -452,6 +452,19 @@ export default function SignupForm() {
                       <SelectItem className="py-2 hover:bg-gray-100" value="admin">Admin</SelectItem>
                     </SelectContent>
                   </Select>
+                  {formData.role === "talent" && (
+                    <p className="text-xs text-gray-600 mt-2">
+                      As a Talent, you will have the opportunity to participate in various challenges.
+                      You can showcase your skills, collaborate with others, and compete for exciting prizes.
+                    </p>
+                  )}
+                  {formData.role === "admin" && (
+                    <p className="text-xs text-gray-700 mt-2">
+                      As an Admin, you will have full control over creating and managing challenges
+                      on the platform. You can design your own challenges, set deadlines, define prize ranges,
+                      and manage participants.
+                    </p>
+                  )}
                   {errors.role && <p className="text-sm text-red-500 mt-1">{errors.role}</p>}
                 </div>
                 <div className="space-y-2">
@@ -494,7 +507,7 @@ export default function SignupForm() {
                 </div>
               </div>
             )}
-            { error && (<p className="text-sm text-red-500 text-center">{error}</p>)}
+            {error && (<p className="text-sm text-red-500 text-center">{error}</p>)}
             <div className="text-center text-sm">
               Already have an account?{" "}
               <Link href="/login" className="text-blue-600 hover:underline">

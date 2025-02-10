@@ -32,7 +32,7 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
                 <Button className="hidden lg:flex bg-secondary text-white text-xs">
-                    Join the Program
+                    <Link href="/signup">Join the Program</Link>
                 </Button>
 
                 {/* Hamburger Menu (Visible on md screens and above) */}

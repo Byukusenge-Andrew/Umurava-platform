@@ -5,10 +5,15 @@ import { GoBackButton } from "@/components/Components";
 import Link from "next/link";
 import { getChallenge } from "@/app/actions/challenges";
 import { Challenge } from "@/app/types/challenge";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { formatTitle } from "@/lib/utils";
 
-function EditChallengePage({ params }: { params: { id: number } }) {
+
+function EditChallengePage() {
+    // Retrieve and normalize the id parameter
+    const { id: paramId } = useParams();
+    const id = Array.isArray(paramId) ? paramId[0] : paramId;
+    
     const [challenge, setChallenge] = useState<Challenge | null>(null);
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,26 +27,27 @@ function EditChallengePage({ params }: { params: { id: number } }) {
 
     useEffect(() => {
         const fetchChallenge = async () => {
+            if (!id) return;
             try {
-                const challengeData = await getChallenge(params.id, localStorage.getItem('_id'));
+                const challengeData = await getChallenge(id, localStorage.getItem('_id'));
                 console.log("Challenge data:", challengeData);
 
                 if (challengeData && Object.keys(challengeData).length === 0) {
-                  // If the fetched data is an empty object, treat it as a 404
-                  setChallenge(null);
+                    // If the fetched data is an empty object, treat it as a 404
+                    setChallenge(null);
                 } else {
-                  setChallenge(challengeData);
+                    setChallenge(challengeData);
                 }
-              } catch (error) {
+            } catch (error) {
                 console.error("Error fetching challenge:", error);
                 setChallenge(null); // In case of an error, treat it as a 404
-              } finally {
+            } finally {
                 setLoading(false);
             }
         };
 
         fetchChallenge();
-    }, [params.id]);
+    }, [id]);
 
     if (loading) {
         return null;
@@ -95,7 +101,7 @@ function EditChallengePage({ params }: { params: { id: number } }) {
 
         // API call to create the challenge
         try {
-            const response = await fetch(`${BASE_URL}/api/challenges/edit/${params.id}`, {
+            const response = await fetch(`${BASE_URL}/api/challenges/edit/${id}`, {
                 method: "PATCH",
                 body: formData,
                 headers: {

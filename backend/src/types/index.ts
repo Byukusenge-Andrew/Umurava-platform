@@ -119,7 +119,7 @@ export enum ChallengeStatus {
 
 export interface IChallenge extends Document {
     Title: string;
-    Deadline: Date;
+    deadline: Date;
     contact_email: string;
     Project_Discription: string;
     Brief: string;
@@ -127,7 +127,7 @@ export interface IChallenge extends Document {
     Description: Description[];
     participants: number;
     creator_id: Types.ObjectId;
-    status: ChallengeStatus ;
+    status: ChallengeStatus;
     createdAt: Date;
     updatedAt: Date;
     isActive(): boolean;

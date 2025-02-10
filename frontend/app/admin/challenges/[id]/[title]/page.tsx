@@ -8,13 +8,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getChallenge } from '@/app/actions/challenges';
 import { Challenge } from '@/app/types/challenge';
+import { useParams } from "next/navigation";
 
-function Page({ params }: { params: Promise<{ id: number }> }) {
-  const { id } = use(params);
+function Page() {
+    // Retrieve and normalize the id parameter
+    const { id: paramId } = useParams();
+    const id = Array.isArray(paramId) ? paramId[0] : paramId;
   const [challenge, setChallenge] = useState<Challenge | null>(null);
 
   useEffect(() => {
     const fetchChallenge = async () => {
+      if (!id) return;
       try {
         const challengeData = await getChallenge(id, localStorage.getItem('_id'));
         console.log("Challenge data:", challengeData);
