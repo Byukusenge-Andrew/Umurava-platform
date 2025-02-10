@@ -41,25 +41,9 @@ const UserSchema = new Schema<IUser>({
         minlength: [6, 'Password must be at least 6 characters'],
         select: false
     },
-    number: {
-        type: String,
-        required: [true, 'Phone number is required'],
-        unique: true,
-        match: [/^[0-9]{10}$/, 'Please enter a valid phone number (10 digits)'],
-        validate: {
-            validator: async function(number: string) {
-                if (this.isNew || this.isModified('number')) {
-                    const exists = await model('User').countDocuments({ number });
-                    return !exists;
-                }
-                return true;
-            },
-            message: 'This phone number is already registered'
-        }
-    },
     role: {
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['talent', 'admin'],
         default: 'user'
     },
     profileImageUrl: {
@@ -153,11 +137,6 @@ UserSchema.path('email').validate(async function(email: string) {
     const emailCount = await model('User').countDocuments({ email });
     return !emailCount;
 }, 'Email already exists');
-
-// Add custom validation for phone number format
-UserSchema.path('number').validate(function(value: string) {
-    return /^07[0-9]{8}$/.test(value);
-}, 'Phone number must start with 07 and be 10 digits long');
 
 // Add method to get challenge count
 UserSchema.methods.getChallengeCount = function(type: 'completed' | 'ongoing' | 'created'): number {

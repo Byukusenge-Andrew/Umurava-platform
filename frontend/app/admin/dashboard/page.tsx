@@ -1,13 +1,17 @@
 import { AdminMetricCard, MetricCard } from '@/components/Components'
 import { Button } from '@/components/ui/button'
-import challengeData from "@/data/challengeData.json";
 import ChallengeCard from '@/components/ChallengeCard';
 import { Bell, ChevronRight, Eye, FileText, Users } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import MetricCardContainer from '../_components/MetricCardContainer';
+import { Challenge } from '@/app/types/challenge';
+import { getChallenges } from '@/app/actions/challenges';
 
-function page() {
+async function page() {
+
+    const challenges: Challenge[] = await getChallenges(3);
+
     return (
         <div className='flex flex-col gap-10 py-6 px-8'>
             <div className='w-full flex justify-between items-center'>
@@ -23,15 +27,21 @@ function page() {
             <div>
                 <div className='w-full flex justify-between items-center text-sm mb-4'>
                     <p className='font-bold'>Recent Challenges</p>
-                    <Link href="/talent/challenges" className='flex items-center text-primary'>
+                    <Link href="/admin/challenges" className='flex items-center text-primary'>
                         See all <ChevronRight className='h-6 w-6' />
                     </Link>
                 </div>
-                <div className="grid grid-cols-3 gap-6">
-                    {challengeData.slice(0, 3).map((challenge) => (
-                        <ChallengeCard key={challenge.id} challenge={challenge} />
+                { challenges.length !==0 ? (
+                <div className="grid grid-cols-3 gap-6 mt-4">
+                    {challenges.slice(0, 3).map((challenge) => (
+                        <ChallengeCard key={challenge._id} challenge={challenge} />
                     ))}
                 </div>
+                ) : (
+                    <p className="mt-1 text-center text-sm text-gray-600">
+                        You have not created any challenges yet!
+                    </p>
+                )}
             </div>
         </div>
     )

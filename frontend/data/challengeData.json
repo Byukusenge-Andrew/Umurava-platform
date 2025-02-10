@@ -9,36 +9,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 2,
@@ -50,36 +46,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$500",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$500",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 3,
@@ -91,36 +83,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 4,
@@ -132,36 +120,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 5,
@@ -173,36 +157,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 6,
@@ -214,36 +194,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 7,
@@ -255,36 +231,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 8,
@@ -296,36 +268,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 9,
@@ -337,36 +305,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 10,
@@ -378,36 +342,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 11,
@@ -419,36 +379,32 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     },
     {
         "id": 12,
@@ -460,35 +416,31 @@
         ],
         "seniority": "Advanced",
         "timeline": "7 days",
-        "challengeDetails": {
-            "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
-            "contactEmail": "talent@umurava.africa",
-            "challengeCategory": "Web design",
-            "moneyPrize": "$150-$400",
-            "deliverables": [
-                "Requirements Catalog and User Interaction Diagram",
-                "User Interface Mockups",
-                "Payroll and HR System Design Completed"
-            ],
-            "tasks": {
-                "productRequirements": [
-                    "UX research to understand Project Requirements",
-                    "Understanding User Needs",
-                    "Understanding Business Goals",
-                    "Determine interaction between users",
-                    "Requirements Catalog"
-                ],
-                "productDesign": [
-                    "User Interface Design for each step",
-                    "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
-                    "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
-                    "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
-                    "Provide a feedback session for in-development guidance" 
-                ]
-            },
-            "notes": [
-                "Find Product Requirements Summary and Features Description for Saway Pay HERE" 
-            ]
-        }
+        "challengeDescription": "A Fintech company that is developing a Digital Financial Platform designed for businesses and their workforce in Africa is partnering with Umurava to run a Skills Challenge for Product Design.",
+        "contactEmail": "talent@umurava.africa",
+        "challengeCategory": "Web design",
+        "moneyPrize": "$150-$400",
+        "deliverables": [
+            "Requirements Catalog and User Interaction Diagram",
+            "User Interface Mockups",
+            "Payroll and HR System Design Completed"
+        ],
+        "productRequirements": [
+            "UX research to understand Project Requirements",
+            "Understanding User Needs",
+            "Understanding Business Goals",
+            "Determine interaction between users",
+            "Requirements Catalog"
+        ],
+        "productDesign": [
+            "User Interface Design for each step",
+            "Creating wireframes to outline the basic structure and layout of the web and mobile app.",
+            "Designing visually appealing and user-friendly interfaces for the web and mobile apps focusing on usability and user experience.",
+            "Ensuring the web application works seamlessly across web, mobile, and tablet devices.",
+            "Provide a feedback session for in-development guidance"
+        ],
+        "notes": [
+            "Find Product Requirements Summary and Features Description for Saway Pay HERE"
+        ]
     }
 ]

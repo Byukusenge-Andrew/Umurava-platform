@@ -11,22 +11,14 @@ import { formatTitle } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import Image from "next/image";
 
+const role = localStorage.getItem("role");
 
-export const ChallengeButton = ({ id, title }: { id: number; title: string }) => {
+export const ChallengeButton = ({ id, title }: { id: string; title: string }) => {
   const pathname = usePathname();
   const dispatch = useDispatch();
-  const role = useSelector((state: { auth: AuthState }) => state.auth.role);
-
-  useEffect(() => {
-    if (pathname.includes("admin")) {
-      dispatch(setRole("admin"));
-    } else {
-      dispatch(setRole("talent"));
-    }
-  }, [pathname, dispatch]);
 
   const formattedTitle = formatTitle(title);
-  const href = role === "admin" ? `/admin/challenges/${id}/${formattedTitle}` : `/talent/challenges/${id}/${formattedTitle}`;
+  const href = `/${role}/challenges/${id}/${formattedTitle}`;
 
   return (
     <Button className="bg-primary text-white text-xs py-0">
@@ -40,12 +32,17 @@ export const GoBackButton = () => {
   const router = useRouter();
 
   return (
-    <button
+    <div
+      className="flex items-center gap-2 cursor-pointer"
       onClick={() => router.back()}
-      className="p-1.5 border w-fit border-gray-200 rounded-lg flex items-center gap-2 hover:border-primary transition"
     >
-      <MoveLeft className="w-3 h-3 text-gray-600" />
-    </button>
+      <button
+        className="p-1.5 border w-fit border-gray-200 rounded-lg flex items-center gap-2 hover:border-primary transition"
+      >
+        <MoveLeft className="w-3 h-3 text-gray-600" />
+      </button>
+      <p className='text-gray-600 mr-2'>Go Back</p>
+    </div>
   );
 };
 
@@ -152,13 +149,13 @@ export const FilterTab = ({ tab, label, count }: { tab: string; label: string; c
   const handleClick = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("tab", tab);
-    router.push(`/talent/challenges?${newParams.toString()}`);
+    router.push(`/${role}/challenges?${newParams.toString()}`);
   };
 
   return (
     <button
       onClick={handleClick}
-      className={`w-fit flex items-center gap-2 text-sm border rounded-md p-3 transition ${isActive ? "bg-blue-100 border-[#FCD2C2]" : "bg-gray-100  border-gray-200"
+      className={`w-fit flex items-center gap-2 text-xs border rounded-md p-2 transition ${isActive ? "bg-blue-100 border-[#FCD2C2]" : "bg-gray-100  border-gray-200"
         }`}
     >
       <FileText className="text-gray-400 h-4 w-4" />

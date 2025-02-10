@@ -39,15 +39,15 @@ const SideNav = () => {
                 <NavItem href="#">
                     <Gift className="mr-2 h-5 w-5" /> Refer family & friends
                 </NavItem>
-                <Link href="#" className="flex items-center justify-between text-white p-3 mt-6 rounded-md hover:bg-blue-500">
+                <Link title="logout" href="/logout" className="flex items-center justify-between text-white p-3 mt-6 rounded-md hover:bg-blue-500 space-x-2">
                     <div className="flex items-center gap-2">
                         <div className="relative">
-                            <Image className="bg-gray-800 border-2 border-gray-300 w-9 h-9 rounded-full object-cover" src="/image-6.png" alt="profile" height={100} width={100} />
+                            <Image className="bg-gray-800 border-2 border-gray-300 w-9 h-9 rounded-full object-cover" src={localStorage.getItem("imageUrl") || "/default-profile.png"}  alt="profile" height={100} width={100} />
                             <span className="bottom-0 left-6 absolute w-2.5 h-2.5 bg-[#04802E] rounded-full"></span>
                         </div>
                         <div className="text-xs">
-                            <p>Hilaire Sh</p>
-                            <p>hilaire@uidesign</p>
+                            <p className="w-32">{localStorage.getItem("name")}</p>
+                            <p className="w-32">{localStorage.getItem("email")}</p>
                         </div>
                     </div>
                     <LogOut />

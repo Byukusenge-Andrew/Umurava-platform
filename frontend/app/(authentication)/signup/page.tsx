@@ -19,7 +19,7 @@ interface FormData {
   fullName: string
   role: string
   specialization: string
-  photo: File | null
+  profileImage: File | null
 }
 
 interface PasswordRequirements {
@@ -33,6 +33,7 @@ interface PasswordRequirements {
 const STORAGE_KEY = "signupFormData"
 
 export default function SignupForm() {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -45,7 +46,7 @@ export default function SignupForm() {
     fullName: "",
     role: "",
     specialization: "",
-    photo: null,
+    profileImage: null,
   })
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [errors, setErrors] = useState({
@@ -63,39 +64,40 @@ export default function SignupForm() {
     number: false,
     special: false,
   })
+  const [error, setError] = useState<string | null>(null)
 
   const specializations = [
-    "Software Development",
-    "UI/UX Design",
-    "Data Science",
-    "Product Management",
-    "Digital Marketing",
-    "Business Analysis",
-    "DevOps Engineering",
-    "Cloud Architecture",
-    "Cybersecurity",
-    "Machine Learning",
-    "Blockchain Development",
-    "Mobile App Development",
-    "Quality Assurance",
-    "Technical Writing",
-    "System Administration",
-    "Network Engineering",
-    "Database Administration",
-    "Game Development",
-    "AR/VR Development",
-    "Artificial Intelligence",
-  ]
+    "Software Developer",
+    "UI/UX Designer",
+    "Data Scientist",
+    "Product Manager",
+    "Digital Marketer",
+    "Business Analyst",
+    "DevOps Engineer",
+    "Cloud Architect",
+    "Cybersecurity Specialist",
+    "Machine Learning Engineer",
+    "Blockchain Developer",
+    "Mobile App Developer",
+    "Quality Assurance Engineer",
+    "Technical Writer",
+    "System Administrator",
+    "Network Engineer",
+    "Database Administrator",
+    "Game Developer",
+    "AR/VR Developer",
+    "Artificial Intelligence Engineer",
+  ];
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem(STORAGE_KEY)
+    const storedData = localStorage.getItem(STORAGE_KEY)
     if (storedData) {
       const parsedData = JSON.parse(storedData)
       setFormData((prevData) => ({
         ...prevData,
         ...parsedData,
       }))
-      setStep(parsedData.step || 1)
+      setStep(parsedData.email ? parsedData.step : 1)
 
       // Reapply password validation after restoring session storage
       if (parsedData.password) {
@@ -106,12 +108,15 @@ export default function SignupForm() {
           number: /[0-9]/.test(parsedData.password),
           special: /[^A-Za-z0-9]/.test(parsedData.password),
         });
-      }  
+      }
     }
 
-    const urlStep = searchParams.get("step")
-    if (urlStep) {
-      setStep(Number.parseInt(urlStep))
+    const urlStep = Number.parseInt(searchParams.get("step") || "0", 10);
+    if (urlStep === 2 && storedData && JSON.parse(storedData).email) {
+      setStep(urlStep);
+    } else {
+      setStep(1);
+      updateURL(1);
     }
   }, [searchParams])
 
@@ -120,7 +125,7 @@ export default function SignupForm() {
       ...formData,
       step,
     }
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(dataToStore))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToStore))
   }, [formData, step])
 
   const updateURL = (newStep: number) => {
@@ -131,12 +136,13 @@ export default function SignupForm() {
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      setFormData({ ...formData, photo: file })
-      setPhotoPreview(URL.createObjectURL(file))
+      const file = e.target.files[0];
+      console.log("Selected file:", file);  // Check if the file is correctly picked
+      setFormData({ ...formData, profileImage: file });
+      setPhotoPreview(URL.createObjectURL(file));
     }
-  }
-
+  };
+  
   const validateFirstStep = () => {
     let isValid = true
     const newErrors = { ...errors }
@@ -212,19 +218,50 @@ export default function SignupForm() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (validateSecondStep()) {
-      setIsLoading(true)
-      // Handle form submission here
-      console.log(formData)
-      // Clear session storage after successful submission
-      sessionStorage.removeItem(STORAGE_KEY)
-      setIsLoading(false)
+    e.preventDefault();
+    setError(null);
+    if (!validateSecondStep()) return;
+  
+    setIsLoading(true);
+    
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("password", formData.password);
+      formDataToSend.append("name", formData.fullName);
+      formDataToSend.append("specialty", formData.specialization);
+      formDataToSend.append("role", formData.role);
+      if (formData.profileImage) {
+        console.log("profileImage", formData.profileImage)
+        formDataToSend.append("profileImage", formData.profileImage);
+      }
+  
+      const response = await fetch(`${BASE_URL}/api/users/register`, {
+        method: "POST",
+        body: formDataToSend,
+      });
+  
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+  
+      localStorage.removeItem(STORAGE_KEY);
+      router.push("/login"); // Redirect to login page
+  
+    } catch (error) {
+      const err = error as Error;
+      console.error("Signup error:", error);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
+  
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
@@ -411,8 +448,8 @@ export default function SignupForm() {
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="talent">Talent</SelectItem>
-                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem className="py-2 hover:bg-gray-100" value="talent">Talent</SelectItem>
+                      <SelectItem className="py-2 hover:bg-gray-100" value="admin">Admin</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.role && <p className="text-sm text-red-500 mt-1">{errors.role}</p>}
@@ -431,7 +468,7 @@ export default function SignupForm() {
                     </SelectTrigger>
                     <SelectContent>
                       {specializations.map((spec) => (
-                        <SelectItem key={spec.toLowerCase().replace(/\s+/g, "-")} value={spec.toLowerCase()}>
+                        <SelectItem className="py-2 hover:bg-gray-100" key={spec.toLowerCase().replace(/\s+/g, "-")} value={spec.toLowerCase()}>
                           {spec}
                         </SelectItem>
                       ))}
@@ -457,6 +494,7 @@ export default function SignupForm() {
                 </div>
               </div>
             )}
+            { error && (<p className="text-sm text-red-500 text-center">{error}</p>)}
             <div className="text-center text-sm">
               Already have an account?{" "}
               <Link href="/login" className="text-blue-600 hover:underline">

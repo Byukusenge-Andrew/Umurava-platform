@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import StoreProvider from "@/lib/StoreProvider";
+import RouteGuard from "@/components/RouteGuard";
 
 export const metadata: Metadata = {
   title: "Umurava",
@@ -16,7 +17,7 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body className="antialiased">
-          {children}
+          <RouteGuard>{children}</RouteGuard>
         </body>
       </html>
     </StoreProvider>
