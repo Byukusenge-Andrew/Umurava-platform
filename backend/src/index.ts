@@ -22,7 +22,7 @@ const port = 3000;
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500'], 
+    origin: ['http://localhost:3000', 'http://127.0.0.1:5500','https://umurava-platform-git-main-gishman-creators-projects.vercel.app'], 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
