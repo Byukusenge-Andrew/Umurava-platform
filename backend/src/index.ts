@@ -178,8 +178,8 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 // Start server
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running on port ${port}`);
+    app.listen(3000, '0.0.0.0', () => {
+  console.log(`Server running on port ${3000}`);
 });
 }
 
