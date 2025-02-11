@@ -42,7 +42,7 @@ export interface StorageConfig {
  */
 const config: Config = {
   env: process.env.NODE_ENV || 'development',
-  port: Number(process.env.PORT) || 3000,
+  port: process.env.PORT|| 3000,
   mongoUrl: process.env.MONGODB_URL || 'mongodb+srv://andrewbyukusenge4:andre01.@cluster0.breue.mongodb.net/umurava_platform?retryWrites=true&w=majority',
   jwtSecret: process.env.JWT_SECRET || '13017c2178c02b2646bcb1ad94cfcccf8d578e54ad3e846d4a81699021d33ce3b1d983ad9203ff67bfeec802b88022cce79be2881a7acec560c01deee9f11723',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
