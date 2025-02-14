@@ -3,19 +3,56 @@ import { GoBackButton } from '@/components/Components'
 import { Button } from '@/components/ui/button'
 import { BriefcaseBusiness, CalendarDays, DollarSign, Mail } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { getChallenge } from '@/app/actions/challenges';
 import { Challenge } from '@/app/types/challenge';
 import { useParams } from 'next/navigation'
 
-async function Page() {
+function Page() {
   // Retrieve and normalize the id parameter
   const { id: paramId } = useParams();
-  const id = Array.isArray(paramId) ? paramId[0] : paramId;
+  const id = Array.isArray(paramId) ? paramId[0] : paramId; // Find the challenge data by ID
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
 
-  if (!id) return;
-  const challenge: Challenge = await getChallenge(id, null); // Find the challenge data by ID
+  useEffect(() => {
+    const fetchChallenge = async () => {
+      if (!id) return;
+      try {
+        const challenge: Challenge = await getChallenge(id, null);;
+        console.log("Challenge data:", challenge);
+
+        if (challenge && Object.keys(challenge).length === 0) {
+          // If the fetched data is an empty object, treat it as a 404
+          setChallenge(null);
+        } else {
+          setChallenge(challenge);
+        }
+      } catch (error) {
+        console.error("Error fetching challenge:", error);
+        setChallenge(null); // In case of an error, treat it as a 404
+      }
+    };
+
+    fetchChallenge();
+  }, [id]);
+
+  if (challenge === null) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h1 className="text-2xl font-semibold">404</h1>
+        <p className="mt-1 text-sm text-gray-600">
+          The challenge your looking for could not be found.
+        </p>
+        <a
+          href={`/talent/challenges`}
+          className="mt-6 text-sm text-blue-500 hover:underline"
+        >
+          Go back
+        </a>
+      </div>
+    ); // In case the challenge ID does not exist
+  }
 
   if (!challenge) {
     return (
