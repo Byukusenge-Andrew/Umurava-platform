@@ -18,11 +18,11 @@ import path from 'path';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000; 
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500'], 
+    origin: '*', 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -178,9 +178,9 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 // Start server
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, () => {
-        logger.info(`Server running at http://localhost:${port}`);
-    });
+    app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
+});
 }
 
 export default app;
