@@ -6,14 +6,21 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { setRole, type AuthState } from "@/lib/features/authentication/authSlice";
 import { formatTitle } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import Image from "next/image";
 
-const role = localStorage.getItem("role");
-
 export const ChallengeButton = ({ id, title }: { id: string; title: string }) => {
+
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setRole(storedRole);
+    }
+  }, []);
+
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -145,6 +152,15 @@ export const FilterTab = ({ tab, label, count }: { tab: string; label: string; c
 
   const currentTab = searchParams.get("tab") || "all";
   const isActive = currentTab === tab;
+
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setRole(storedRole);
+    }
+  }, []);
 
   const handleClick = () => {
     const newParams = new URLSearchParams(searchParams);
