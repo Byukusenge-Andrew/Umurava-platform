@@ -22,10 +22,10 @@ const PORT = process.env.PORT || 3000;
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500'], 
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:5500'], 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With']
 };
 
 // Middleware
@@ -48,9 +48,9 @@ mongoose.connect(config.mongoUrl)
     });
 
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/challenges', challengeRoutes);
-app.use('/api/images', imageRoutes);
+app.use('/users', userRoutes);
+app.use('/challenges', challengeRoutes);
+app.use('/images', imageRoutes);
 // Swagger Documentation
 // app.use('/api-docs', swaggerUi.serve());
 // app.use('/api-docs', swaggerUi.setup(specs));

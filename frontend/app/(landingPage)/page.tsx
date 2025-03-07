@@ -263,7 +263,7 @@ export default async function Home() {
                     </p>
                 </div>
                 <div className="w-full flex justify-start px-5 md:px-0 md:pl-16">
-                    <TestimonialCarouselComponent />
+                    {/* <TestimonialCarouselComponent /> */}
                 </div>
             </div>
             <div className="bg-[#F9FAFB] flex flex-col items-center gap-14 w-full py-14 px-5 md:px-14">

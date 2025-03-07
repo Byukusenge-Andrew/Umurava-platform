@@ -111,7 +111,7 @@ export default function SignupForm() {
       }
     }
 
-    const urlStep = Number.parseInt(searchParams.get("step") || "0", 10);
+    const urlStep = Number.parseInt(searchParams?.get("step") || "0", 10);
     if (urlStep === 2 && storedData && JSON.parse(storedData).email) {
       setStep(urlStep);
     } else {
@@ -129,9 +129,9 @@ export default function SignupForm() {
   }, [formData, step])
 
   const updateURL = (newStep: number) => {
-    const params = new URLSearchParams(searchParams)
-    params.set("step", newStep.toString())
-    router.push(`/signup?${params.toString()}`)
+    const params = new URLSearchParams(searchParams?.toString() || "");
+    params.set("step", newStep.toString());
+    router.push(`/signup?${params.toString()}`);
   }
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -225,37 +225,48 @@ export default function SignupForm() {
     setIsLoading(true);
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("password", formData.password);
-      formDataToSend.append("name", formData.fullName);
-      formDataToSend.append("specialty", formData.specialization);
-      formDataToSend.append("role", formData.role);
-      if (formData.profileImage) {
-        console.log("profileImage", formData.profileImage)
-        formDataToSend.append("profileImage", formData.profileImage);
-      }
+        const formDataToSend = new FormData();
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("password", formData.password);
+        formDataToSend.append("name", formData.fullName);
+        formDataToSend.append("specialty", formData.specialization.toLowerCase());
+        formDataToSend.append("role", formData.role.toLowerCase());
+        formDataToSend.append("isEmailVerified", "false"); // Add email verification flag
+        
+        if (formData.profileImage) {
+            formDataToSend.append("profileImage", formData.profileImage);
+        }
 
-      const response = await fetch(`${BASE_URL}/api/users/register`, {
-        method: "POST",
-        body: formDataToSend,
-      });
+        const response = await fetch(`${BASE_URL}/users/register`, {
+            method: "POST",
+            body: formDataToSend,
+            // Don't set Content-Type header - browser will set it with boundary for FormData
+            credentials: 'include',
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
-      }
+        if (!response.ok) {
+            throw new Error(data.error || data.message || "Registration failed");
+        }
 
-      localStorage.removeItem(STORAGE_KEY);
-      router.push("/login"); // Redirect to login page
+        // Clear form data from local storage
+        localStorage.removeItem(STORAGE_KEY);
+        
+        // Show success message before redirect
+        setError("Registration successful! Please check your email for verification.");
+        
+        // Redirect to unverified page after a short delay
+        setTimeout(() => {
+            router.push("/unverified");
+        }, 2000);
 
     } catch (error) {
-      const err = error as Error;
-      console.error("Signup error:", error);
-      setError(err.message);
+        const err = error as Error;
+        console.error("Signup error:", error);
+        setError(err.message || "An error occurred during registration");
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
 

@@ -2,6 +2,10 @@ import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
 import logger from '../utils/logger';
+import { emailTransporter, EMAIL_FROM, EMAIL_FROM_NAME } from '../config/email';
+import User from '../models/User';
+import crypto from 'crypto';
+import { Document } from 'mongoose';
 
 class EmailService {
     private transporter: nodemailer.Transporter;
@@ -22,36 +26,29 @@ class EmailService {
         });
     }
 
-    async sendVerificationEmail(email: string, name: string, userId: string): Promise<void> {
-        const token = jwt.sign(
-            { userId },
-            config.jwtSecret,
-            { expiresIn: '24h' }
-        );
-
-        const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${token}`;
-
-        const mailOptions = {
-            from: `"Umurava Platform" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: 'Verify Your Email - Umurava Platform',
-            html: `
-                <h1>Welcome to Umurava, ${name}!</h1>
-                <p>Please verify your email by clicking the link below:</p>
-                <a href="${verificationUrl}" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Verify Email</a>
-                <p>This link expires in 24 hours.</p>
-                <p>If the button doesn't work, copy and paste this URL into your browser:</p>
-                <p>${verificationUrl}</p>
-            `
-        };
-
+    async sendVerificationEmail(email: string, name: string, token: string): Promise<void> {
         try {
-            await this.transporter.verify();
-            const info = await this.transporter.sendMail(mailOptions);
-            logger.info(`Verification email sent to ${email}: ${info.messageId}`);
-        } catch (error: any) {
+            const verificationUrl = `${config.frontendUrl}/verify-email/${token}`;
+            
+            await emailTransporter.sendMail({
+                from: `"${EMAIL_FROM_NAME}" <${EMAIL_FROM}>`,
+                to: email,
+                subject: 'Please Verify Your Email',
+                html: `
+                    <h1>Hello ${name},</h1>
+                    <p>Please verify your email address by clicking the link below:</p>
+                    <a href="${verificationUrl}" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Verify Email</a>
+                    <p>This link will expire in 24 hours.</p>
+                    <p>If the button doesn't work, copy and paste this URL into your browser:</p>
+                    <p>${verificationUrl}</p>
+                    <p>If you did not create an account, please ignore this email.</p>
+                `
+            });
+
+            logger.info(`Verification email sent to ${email}`);
+        } catch (error) {
             logger.error('Error sending verification email:', error);
-            throw new Error(`Failed to send verification email: ${error.message}`);
+            throw new Error('Failed to send verification email');
         }
     }
 }
