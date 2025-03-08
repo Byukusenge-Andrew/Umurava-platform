@@ -243,8 +243,10 @@ export default function SignupForm() {
             // Don't set Content-Type header - browser will set it with boundary for FormData
             credentials: 'include',
         });
+        console.log(response)
 
         const data = await response.json();
+        console.log(data)
 
         if (!response.ok) {
             throw new Error(data.error || data.message || "Registration failed");

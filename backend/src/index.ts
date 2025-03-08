@@ -19,22 +19,16 @@ dotenv.config();
 
 const app: Express = express();
 
-const port = Number(process.env.PORT) || 3000; 
+const port = Number(process.env.PORT) || 3001; 
 
 // CORS configuration
 const corsOptions = {
-
-//   
-
     origin: '*', 
-
-    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With']
 };
 
 // Middleware
-app.use(cors(corsOptions));
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
