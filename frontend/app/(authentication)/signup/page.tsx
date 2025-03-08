@@ -39,6 +39,7 @@ export default function SignupForm() {
 
   const [step, setStep] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+  const [message, setMessage] = useState('')
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -225,50 +226,46 @@ export default function SignupForm() {
     setIsLoading(true);
 
     try {
-        const formDataToSend = new FormData();
-        formDataToSend.append("email", formData.email);
-        formDataToSend.append("password", formData.password);
-        formDataToSend.append("name", formData.fullName);
-        formDataToSend.append("specialty", formData.specialization.toLowerCase());
-        formDataToSend.append("role", formData.role.toLowerCase());
-        formDataToSend.append("isEmailVerified", "false"); // Add email verification flag
-        
-        if (formData.profileImage) {
-            formDataToSend.append("profileImage", formData.profileImage);
-        }
+      const formDataToSend = new FormData();
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("password", formData.password);
+      formDataToSend.append("name", formData.fullName);
+      formDataToSend.append("specialty", formData.specialization.toLowerCase());
+      formDataToSend.append("role", formData.role.toLowerCase());
+      formDataToSend.append("isEmailVerified", "false"); // Add email verification flag
 
-        const response = await fetch(`${BASE_URL}/users/register`, {
-            method: "POST",
-            body: formDataToSend,
-            // Don't set Content-Type header - browser will set it with boundary for FormData
-            credentials: 'include',
-        });
-        console.log(response)
+      if (formData.profileImage) {
+        formDataToSend.append("profileImage", formData.profileImage);
+      }
 
-        const data = await response.json();
-        console.log(data)
+      const response = await fetch(`${BASE_URL}/users/register`, {
+        method: "POST",
+        body: formDataToSend,
+      });
+      console.log(response)
 
-        if (!response.ok) {
-            throw new Error(data.error || data.message || "Registration failed");
-        }
+      const data = await response.json();
+      console.log(data)
 
-        // Clear form data from local storage
-        localStorage.removeItem(STORAGE_KEY);
-        
-        // Show success message before redirect
-        setError("Registration successful! Please check your email for verification.");
-        
-        // Redirect to unverified page after a short delay
-        setTimeout(() => {
-            router.push("/unverified");
-        }, 2000);
+      if (!response.ok) {
+        throw new Error(data.error || data.message || "Registration failed");
+      }
+
+      // Clear form data from local storage
+      localStorage.removeItem(STORAGE_KEY);
+
+      // Show success message before redirect
+      setMessage("Registration successful! Please check your email for verification.");
+
+      // Redirect to unverified page after a short delay
+      router.push("/unverified");
 
     } catch (error) {
-        const err = error as Error;
-        console.error("Signup error:", error);
-        setError(err.message || "An error occurred during registration");
+      const err = error as Error;
+      console.error("Signup error:", error);
+      setError(err.message || "An error occurred during registration");
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -521,6 +518,7 @@ export default function SignupForm() {
               </div>
             )}
             {error && (<p className="text-sm text-red-500 text-center">{error}</p>)}
+            {message && (<p className="text-sm text-primary text-center">{message}</p>)}
             <div className="text-center text-sm">
               Already have an account?{" "}
               <Link href="/login" className="text-blue-600 hover:underline">

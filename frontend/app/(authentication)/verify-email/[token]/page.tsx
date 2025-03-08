@@ -32,11 +32,9 @@ export default function VerifyEmail() {
 
         setStatus('success');
         setMessage(data.message || 'Email verified successfully!');
-        
+
         // Redirect to login after successful verification
-        setTimeout(() => {
-          router.push('/login');
-        }, 3000);
+        router.push('/login');
       } catch (error: any) {
         setStatus('error');
         setMessage(error.message || 'Verification failed. Please try again.');
@@ -85,8 +83,8 @@ export default function VerifyEmail() {
                   <p className="text-sm">
                     Please try again or contact support if the problem persists.
                   </p>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => router.push('/login')}
                     className="w-full"
                   >
