@@ -40,7 +40,7 @@ interface IUserBaseAttributes {
         fileId: ObjectId;
         metadata: ImageMetadata;
     };
-    role: 'user' | 'admin';
+    role: 'talent' | 'admin';
     created_at: Date;
     updated_at: Date;
     adminRequest?: {

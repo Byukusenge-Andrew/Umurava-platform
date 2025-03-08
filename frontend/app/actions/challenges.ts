@@ -13,7 +13,9 @@ export const getChallenge = async (id: string, creator_id: string | null) => {
 
 export async function getChallenges(limit?: number) {
     try {
+        console.log('getting challenges')
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/challenges/${limit || ''}`);
+        console.log('got challenges', response)
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }

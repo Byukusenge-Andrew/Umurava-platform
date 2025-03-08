@@ -25,6 +25,7 @@ export default function VerifyEmail() {
         });
 
         const data = await response.json();
+        const { token, user } = data;
 
         if (!response.ok) {
           throw new Error(data.message || 'Verification failed');
@@ -32,9 +33,19 @@ export default function VerifyEmail() {
 
         setStatus('success');
         setMessage(data.message || 'Email verified successfully!');
+  
+        // Store JWT token and user details in localStorage
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('_id', user._id);
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('role', user.role);
+        localStorage.setItem('imageUrl', user.imageUrl);
 
         // Redirect to login after successful verification
-        router.push('/login');
+        setTimeout(() => {
+          router.push(`/${user.role}/dashboard`);
+        }, 3000);
       } catch (error: any) {
         setStatus('error');
         setMessage(error.message || 'Verification failed. Please try again.');
