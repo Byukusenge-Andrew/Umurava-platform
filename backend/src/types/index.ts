@@ -68,7 +68,7 @@ export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    role: 'user' | 'admin' | 'super_admin';
+    role: 'talent' | 'admin' | 'super_admin';
     number: string;
     comparePassword(candidatePassword: string): Promise<boolean>;
     profilePicture?: string;

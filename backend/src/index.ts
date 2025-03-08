@@ -18,14 +18,19 @@ import path from 'path';
 dotenv.config();
 
 const app: Express = express();
-const port = 3001; 
+
+const port = Number(process.env.PORT) || 3000; 
 
 // CORS configuration
 const corsOptions = {
+
+//   
+
     origin: '*', 
+
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With']
 };
 
 // Middleware
@@ -48,9 +53,9 @@ mongoose.connect(config.mongoUrl)
     });
 
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/challenges', challengeRoutes);
-app.use('/api/images', imageRoutes);
+app.use('/users', userRoutes);
+app.use('/challenges', challengeRoutes);
+app.use('/images', imageRoutes);
 // Swagger Documentation
 // app.use('/api-docs', swaggerUi.serve());
 // app.use('/api-docs', swaggerUi.setup(specs));
