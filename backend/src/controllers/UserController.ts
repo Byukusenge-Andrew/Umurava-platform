@@ -447,7 +447,7 @@ export default class UserController extends BaseController<IUser> {
         emailVerificationExpires: tokenExpiry
       });
 
-      res.status(201).json({
+      return res.status(201).json({
         success: true,
         message: 'Registration successful. Please check your email to verify your account.'
       });

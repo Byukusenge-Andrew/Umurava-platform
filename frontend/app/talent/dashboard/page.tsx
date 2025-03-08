@@ -63,7 +63,7 @@ function page() {
                 {isLoading ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center gap-6 mt-4">
                         {[...Array(3)].map((_, index) => (
-                            <ChallengeCardSkeleton />
+                            <ChallengeCardSkeleton key={index} />
                         ))}
                     </div>
                 ) : challenges.length !== 0 ? (
