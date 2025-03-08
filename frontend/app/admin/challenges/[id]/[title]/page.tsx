@@ -13,8 +13,9 @@ import ChallengePageSkeleton from "@/components/skeletons/ChallengePageSkeleton"
 
 function Page() {
   // Retrieve and normalize the id parameter
-  const { id: paramId } = useParams();
-  const id = Array.isArray(paramId) ? paramId[0] : paramId;
+  const params = useParams();
+  const id = typeof params?.id === "string" ? params.id : params?.id?.[0] || null;
+  
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

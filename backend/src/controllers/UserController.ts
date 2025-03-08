@@ -483,8 +483,21 @@ export default class UserController extends BaseController<IUser> {
       user.emailVerificationExpires = undefined;
       await user.save();
 
+      // Generate JWT token
+      const userToken: any = jwt.sign({ id: user._id }, config.jwtSecret as jwt.Secret, {
+        expiresIn: "30d",
+      });
+
       return res.status(200).json({
         success: true,
+        token: userToken,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          imageUrl: user.profileImageUrl,
+        },
         message: 'Email verified successfully. You can now log in.'
       });
 
