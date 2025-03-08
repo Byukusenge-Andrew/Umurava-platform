@@ -17,6 +17,7 @@ function page() {
     useEffect(() => {
         const fetchChallenge = async () => {
             try {
+                console.log('getting challenges')
                 const challengeData = await getChallenges(3);
                 console.log("Challenge data:", challengeData);
 
