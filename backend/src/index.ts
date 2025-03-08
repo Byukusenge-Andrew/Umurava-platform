@@ -18,6 +18,7 @@ import path from 'path';
 dotenv.config();
 
 const app: Express = express();
+
 const port = Number(process.env.PORT) || 3000; 
 
 // CORS configuration
