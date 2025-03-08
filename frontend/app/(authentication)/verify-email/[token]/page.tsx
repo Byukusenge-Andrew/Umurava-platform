@@ -42,6 +42,8 @@ export default function VerifyEmail() {
         localStorage.setItem('role', user.role);
         localStorage.setItem('imageUrl', user.imageUrl);
 
+        console.log('image url is:', user.imageUrl)
+
         // Redirect to login after successful verification
         setTimeout(() => {
           router.push(`/${user.role}/dashboard`);

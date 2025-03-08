@@ -421,6 +421,8 @@ export default class UserController extends BaseController<IUser> {
 
   register = asyncHandler(async (req: Request, res: Response) => {
     const { name, email, password, specialty } = req.body;
+    const file = req.file;
+    let fileUrl: string | null = null;
 
     try {
       // Check for existing user first
@@ -436,12 +438,38 @@ export default class UserController extends BaseController<IUser> {
       // Send verification email first
       await EmailService.sendVerificationEmail(email, name, token);
 
+      // 5. File Upload Validation
+      if (req.file) {
+        // Validate file size (e.g., 5MB limit)
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        if (req.file.size > maxSize) {
+          return res.status(500).json({
+            success: false,
+            message: "File size must be less than 5MB",
+          });
+          throw new ValidationError("File size must be less than 5MB");
+        }
+
+        try {
+          fileUrl = await CloudStorageService.uploadFile(req.file);
+          logger.info(`File uploaded successfully, URL: ${fileUrl}`);
+        } catch (error) {
+          logger.error("Error uploading file:", error);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload profile image",
+          });
+          throw new ValidationError("Failed to upload profile image");
+        }
+      }
+
       // If email sends successfully, create the user
       const user = await User.create({
         name,
         email,
         password,
         specialty,
+        profileImageUrl: fileUrl,
         isEmailVerified: false,
         emailVerificationToken: token,
         emailVerificationExpires: tokenExpiry

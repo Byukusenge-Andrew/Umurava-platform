@@ -43,7 +43,7 @@ function Nav() {
 
 const NavItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
     const pathName = usePathname();
-    const isActive = pathName.startsWith(href);
+    const isActive = pathName?.startsWith(href);
 
     return (
         <Link

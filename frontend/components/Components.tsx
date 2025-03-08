@@ -150,7 +150,7 @@ export const FilterTab = ({ tab, label, count }: { tab: string; label: string; c
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const currentTab = searchParams.get("tab") || "all";
+  const currentTab = searchParams?.get("tab") || "all";
   const isActive = currentTab === tab;
 
   const [role, setRole] = useState("");
@@ -163,7 +163,7 @@ export const FilterTab = ({ tab, label, count }: { tab: string; label: string; c
   }, []);
 
   const handleClick = () => {
-    const newParams = new URLSearchParams(searchParams);
+    const newParams = new URLSearchParams(searchParams || "");
     newParams.set("tab", tab);
     router.push(`/${role}/challenges?${newParams.toString()}`);
   };
